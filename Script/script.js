@@ -53,40 +53,123 @@ class Player{
             this.velocity.y += gravidade;
             this.position.y += this.velocity.y;
         }
+
+        this.position.x += this.velocity.x;
     }
 }
 
+class Bala{
+    constructor(x,y,direcao){
+        this.position={
+            y,
+            x,
+        };
+        this.size={
+            height: 4,
+            width: 5,
+        };
+        this.speed=20;
+        this.color = "red";
+        this.direcao = direcao;
+    }  
+        draw(){
+            ctx.fillStyle=this.color;
+            ctx.fillRect(this.position.x,this.position.y,
+                this.size.width,this.size.height
+            );
+        }
+        update() {
+            if(this.direcao === "direita"){
+                this.position.x += this.speed;
+            }
+            else{
+                this.position.x -= this.speed;
+            }
+            this.draw();
+        }
+}
+
 const player = new Player();
+let balas = [];
+let canPress = true;
+let keys={
+    left: false,
+    right: false,
+};
+let mira={
+    leftAim:false,
+    rightAim:false,
+}
+
 
 function animate(){
     requestAnimationFrame(animate);
     ctx.clearRect(0,0,canvas.width,canvas.height);
+    
+    if(keys.left){
+        if(player.velocity.x <= 10){
+            player.velocity.x += 5;
+        }
+        
+    }
+    else if(keys.right){
+        if(player.velocity.x >= -10){
+            player.velocity.x -= 5;
+        }
+        
+    }
+    else player.velocity.x = 0;
+
     player.update();
     player.draw();
-}
 
-let canPress = true;
+    
+    balas.forEach((bala, index) => {
+        bala.update();
+        if(bala.position.x > canvas.width || bala.position.x < 0){
+            balas.splice(index,1);
+            }
+        });
+}
 
 function doAction(){
-    console.log("Action Executed");
+    console.log("pular");
     canPress = true;
 }
+
 
 animate();
 
 document.addEventListener("keydown", ({code}) => {
-    if (code === "Space" && canPress == true){
+    if ((code === "Space") && canPress == true ){
         canPress =false;
         player.position.y -= 15;
         player.velocity.y = -10;
-        setTimeout(doAction,500);
+        setTimeout(doAction,300);
     }
     if (code === "KeyD"){
-        player.position.x += 15;
-
+        keys.left=true;
+        mira.leftAim =false;
+        mira.rightAim =true;
     }
     if (code === "KeyA"){
-        player.position.x -= 15;
+        keys.right=true;
+        mira.rightAim =false;
+        mira.leftAim =true;
+    }
 
+})
+document.addEventListener("click", () =>{
+    const direcao = mira.rightAim ? "direita" : "esquerda";
+    const bala = new Bala(player.position.x-5,player.position.y,direcao);
+    balas.push(bala);
+});
+
+document.addEventListener("keyup", ({code}) =>{
+    if (code === "KeyD"){
+        keys.left=false;
+    }
+    if (code === "KeyA"){
+        keys.right=false;
     }
 })
