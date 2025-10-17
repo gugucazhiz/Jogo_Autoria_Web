@@ -198,7 +198,7 @@ document.addEventListener("keydown", ({code}) => {
 })
 document.addEventListener("click", () =>{
     const direcao = mira.rightAim ? "direita" : "esquerda";
-    const bala = new Bala(player.position.x-5,player.position.y,direcao);
+    const bala = new Bala(player.position.x+50,player.position.y+50,direcao);
     balas.push(bala);
 });
 
