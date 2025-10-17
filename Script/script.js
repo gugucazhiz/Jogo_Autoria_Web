@@ -30,8 +30,8 @@ class Player{
         }
 
         this.size = {
-            width : 20,
-            height : 20
+            width : 2,
+            height : 20,
         }
         this.color = "green";
 
@@ -39,14 +39,33 @@ class Player{
             x : 0,
             y : 0
         }
+        this.sprite = new Image();
+        this.sprite.src = "Sprites/Player/Protagonista_semfundo.png"
+        //Controle Framess
+        this.altura =250;
+        this.largura =220;
+        this.estado = 0;
+        this.direcao = 1.2;
+        this.maximoframes = 4;
+        this.frameContador=0;
+        this.frameDelay =10;
     }
     draw(){
-        ctx.fillStyle = this.color;
-        ctx.fillRect(this.position.x,this.position.y,
-            this.size.width,this.size.height);
+        ctx.drawImage(
+            this.sprite,
+            this.estado * this.largura+20,
+            this.direcao * this.altura,
+            this.largura-30,
+            this.altura-10,
+            this.position.x,
+            this.position.y,
+            this.largura-120,
+            this.altura-110
+            );
+        
     }
     update(){
-        if(this.position.y+this.size.height > canvas.height-55){
+        if(this.position.y+this.size.height > canvas.height-160){
             this.velocity.y = 0;    
         }
         else{
@@ -55,6 +74,24 @@ class Player{
         }
 
         this.position.x += this.velocity.x;
+
+
+        if(this.velocity.x !== 0){
+            this.animateFrames();
+        }
+        else{
+            this.estado = 0;
+        }
+    }
+     animateFrames() {
+       this.frameContador++;
+       if(this.frameContador >= this.frameDelay){
+            this.estado= this.estado +1;
+            if(this.estado >= this.maximoframes){
+                this.estado=0;
+            }
+            this.frameContador=0;
+       }
     }
 }
 
@@ -138,8 +175,6 @@ function doAction(){
 }
 
 
-animate();
-
 document.addEventListener("keydown", ({code}) => {
     if ((code === "Space") && canPress == true ){
         canPress =false;
@@ -151,11 +186,13 @@ document.addEventListener("keydown", ({code}) => {
         keys.left=true;
         mira.leftAim =false;
         mira.rightAim =true;
+        player.direcao =1.2;
     }
     if (code === "KeyA"){
         keys.right=true;
         mira.rightAim =false;
         mira.leftAim =true;
+        player.direcao =0.2;
     }
 
 })
@@ -173,3 +210,7 @@ document.addEventListener("keyup", ({code}) =>{
         keys.right=false;
     }
 })
+
+player.sprite.onload = () => {
+    animate();
+}
