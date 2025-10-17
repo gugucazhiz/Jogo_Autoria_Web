@@ -40,20 +40,22 @@ class Player{
             y : 0
         }
         this.sprite = new Image();
-        this.sprite.src = "Sprites/Player/Protagonista_semfundo.png"
+        this.sprite.src = "Sprites/Player/personagem_correndo.png"
         //Controle Framess
-        this.altura =250;
-        this.largura =220;
+        this.altura =210;
+        this.largura =210;
         this.estado = 0;
-        this.direcao = 1.2;
-        this.maximoframes = 4;
+        this.direcao = 0;
+        this.maximoframes = 5;
         this.frameContador=0;
         this.frameDelay =10;
     }
     draw(){
+        ctx.fillStyle = 'blue'
+        ctx.fillRect(0,0,8000,8000)
         ctx.drawImage(
             this.sprite,
-            this.estado * this.largura+20,
+            this.estado * this.largura,
             this.direcao * this.altura,
             this.largura-30,
             this.altura-10,
@@ -65,14 +67,15 @@ class Player{
         
     }
     update(){
-        if(this.position.y+this.size.height > canvas.height-160){
+        if(this.position.y> canvas.height-110){
             this.velocity.y = 0;    
         }
         else{
             this.velocity.y += gravidade;
             this.position.y += this.velocity.y;
         }
-
+        //this.velocity.x
+        //para testar frames = 0.1
         this.position.x += this.velocity.x;
 
 
@@ -86,7 +89,7 @@ class Player{
      animateFrames() {
        this.frameContador++;
        if(this.frameContador >= this.frameDelay){
-            this.estado= this.estado +1;
+            this.estado= this.estado +0.8;
             if(this.estado >= this.maximoframes){
                 this.estado=0;
             }
@@ -186,13 +189,13 @@ document.addEventListener("keydown", ({code}) => {
         keys.left=true;
         mira.leftAim =false;
         mira.rightAim =true;
-        player.direcao =1.2;
+        player.direcao =1;
     }
     if (code === "KeyA"){
         keys.right=true;
         mira.rightAim =false;
         mira.leftAim =true;
-        player.direcao =0.2;
+        player.direcao =0;
     }
 
 })
