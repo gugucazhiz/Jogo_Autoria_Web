@@ -49,14 +49,28 @@ class Player{
         this.maximoframes = 5;
         this.frameContador=0;
         this.frameDelay =10;
+        this.acao = "parado";
+        this.acao_anterior =0;
     }
     draw(){
-        ctx.fillStyle = 'blue'
-        ctx.fillRect(0,0,8000,8000)
+        let linha;
+        switch(this.acao){
+            case "parado":
+                linha = 1;
+                break;
+            case "esquerda":
+                linha= 0;
+                break;
+            case "direita":
+                linha = 1;
+                break;
+            case "pulando":
+                linha = 2;
+        }
         ctx.drawImage(
             this.sprite,
             this.estado * this.largura,
-            this.direcao * this.altura,
+            linha * this.altura,
             this.largura-30,
             this.altura-10,
             this.position.x,
@@ -67,19 +81,35 @@ class Player{
         
     }
     update(){
-        if(this.position.y> canvas.height-110){
-            this.velocity.y = 0;    
-        }
-        else{
+        if(this.position.y < canvas.height-110){
             this.velocity.y += gravidade;
             this.position.y += this.velocity.y;
+
+            if(this.velocity.y > 0){
+                this.acao = "pulando";
+                this.estado = 4;
+            }
+        }
+        else{
+            this.velocity.y = 0;
+            this.position.y = canvas.height -110;
+            if(this.acao === "pulando"){
+                if(this.velocity.x !== 0) {
+                    this.acao = (this.acao_anterior === 0)? "esquerda" : "direita";
+                }
+                else{
+                    this.acao = "parado";
+                }
+                this.estado = 0;
+            }
+
         }
         //this.velocity.x
         //para testar frames = 0.1
         this.position.x += this.velocity.x;
 
 
-        if(this.velocity.x !== 0){
+        if(this.velocity.x > 0 || this.velocity.x <0){
             this.animateFrames();
         }
         else{
@@ -95,6 +125,12 @@ class Player{
             }
             this.frameContador=0;
        }
+    }
+    pular(){
+        if(this.position.y >= canvas.height -110){
+            this.velocity.y =-10;
+            this.acao = "pulando";
+        }
     }
 }
 
@@ -129,6 +165,8 @@ class Bala{
         }
 }
 
+
+//VARIAVEIS
 const player = new Player();
 let balas = [];
 let canPress = true;
@@ -140,21 +178,25 @@ let mira={
     leftAim:false,
     rightAim:false,
 }
+let acao_anterior =0;
 
+//VARIAVEIS
 
 function animate(){
     requestAnimationFrame(animate);
     ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle = 'purple'
+    ctx.fillRect(0,0,8000,8000)
     
     if(keys.left){
-        if(player.velocity.x <= 10){
-            player.velocity.x += 5;
+        if(player.velocity.x > -8){
+            player.velocity.x -= 2;
         }
         
     }
     else if(keys.right){
-        if(player.velocity.x >= -10){
-            player.velocity.x -= 5;
+        if(player.velocity.x < 8){
+            player.velocity.x += 2;
         }
         
     }
@@ -176,26 +218,40 @@ function doAction(){
     console.log("pular");
     canPress = true;
 }
+/*  
 
+function pular(){
+        player.direcao = 2;
+        player.estado= (this.acao_anterior===1)? 4 : 3.2;
+        
+        setTimeout(() => {
+            player.direcao =acao_anterior;
+            player.estado = 0;
+        },50);
+}
 
+*/
 document.addEventListener("keydown", ({code}) => {
     if ((code === "Space") && canPress == true ){
         canPress =false;
-        player.position.y -= 15;
+        player.position.y -= 20;
         player.velocity.y = -10;
-        setTimeout(doAction,300);
+        setTimeout(doAction,500);
+        
     }
     if (code === "KeyD"){
-        keys.left=true;
+        keys.right=true;
         mira.leftAim =false;
         mira.rightAim =true;
-        player.direcao =1;
+        player.acao ="direita";
+        player.acao_anterior =1;
     }
     if (code === "KeyA"){
-        keys.right=true;
+        keys.left=true;
         mira.rightAim =false;
         mira.leftAim =true;
-        player.direcao =0;
+        player.acao ="esquerda";
+        player.acao_anterior = 0;
     }
 
 })
@@ -207,10 +263,10 @@ document.addEventListener("click", () =>{
 
 document.addEventListener("keyup", ({code}) =>{
     if (code === "KeyD"){
-        keys.left=false;
+        keys.right=false;
     }
     if (code === "KeyA"){
-        keys.right=false;
+        keys.left=false;
     }
 })
 
