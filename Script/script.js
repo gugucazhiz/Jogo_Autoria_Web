@@ -44,16 +44,16 @@ class Player{
         //Controle Framess
         this.altura =210;
         this.largura =210;
-        this.estado = 0;
-        this.direcao = 0;
-        this.maximoframes = 5;
-        this.frameContador=0;
-        this.frameDelay =10;
-        this.acao = "parado";
-        this.acao_anterior =0;
+        this.estado = 0;       //cordenada X do spritesheet
+        this.direcao = 0;      //direção atual a ser olhada
+        this.maximoframes =5;  //quantidade de frames a serem usados da spritesheet
+        this.frameContador=0;  //index i do if de animateFrames
+        this.frameDelay =10;   //Fps
+        this.acao = "parado";  //Animacao Atual
+        this.acao_anterior =0; //ultima direção olhada
     }
     draw(){
-        let linha;
+        let linha; //cordenada y do spriteSheet
         switch(this.acao){
             case "parado":
                 linha = 2;
@@ -124,7 +124,6 @@ class Player{
             if ((this.acao === "parado") && (this.estado === 2.4 || this.estado === 5.6)) {
                 this.acao = (this.acao_anterior === 0)? "esquerda" : "direita";
                 this.estado = 0;
-                
             }   
             this.animateFrames();
         }
@@ -195,12 +194,8 @@ let keys={
     left: false,
     right: false,
 };
-let mira={
-    leftAim:false,
-    rightAim:false,
-}
 let acao_anterior =0;
-
+let verifica_estado=true;
 //VARIAVEIS
 
 function animate(){
@@ -221,6 +216,8 @@ function animate(){
         }
         
     }
+    //se "A" nem "D" estiverem sendo pressionados
+    //a velocidade do player zera.
     else player.velocity.x = 0;
 
     player.update();
@@ -235,9 +232,16 @@ function animate(){
         });
 }
 
+//TimeStamp do pulo
 function doAction(){
     console.log("pular");
     canPress = true;
+}
+
+//refresh do estado ao sair de "parado" || "pulando"
+function limpaEstado(){
+    player.estado=0;
+    verifica_estado = false;
 }
 /*  
 
@@ -252,34 +256,42 @@ function pular(){
 }
 
 */
+
+
 document.addEventListener("keydown", ({code}) => {
     if ((code === "Space") && canPress == true ){
         canPress =false;
+        //Mexa aqui para mudar altura e velocidade do pulo
         player.position.y -= 20;
         player.velocity.y = -10;
         setTimeout(doAction,500);
         
     }
     if (code === "KeyD"){
-        keys.right=true;
-        mira.leftAim =false;
-        mira.rightAim =true;
-        player.acao ="direita";
-        player.acao_anterior =1;
-        player.estado = 0;
+        //serve para limpar o estado antes de mostrar o sprite
+        //dele correndo (sem esse if o sprite apresenta glitchs)
+        if(verifica_estado)
+            {limpaEstado()}
+
+        keys.right=true;   //aumenta a velocidade do player
+        player.acao ="direita"; //envia para o switch trocar o frame atual
+                                //no stylesheet
+
+        player.acao_anterior =1; //guarda a ultima direção olhada pelo player
     }
     if (code === "KeyA"){
+        if(verifica_estado)
+            {limpaEstado()}
         keys.left=true;
-        mira.rightAim =false;
-        mira.leftAim =true;
         player.acao ="esquerda";
         player.acao_anterior = 0;
-        player.estado = 0;
     }
 
 })
 document.addEventListener("click", () =>{
-    const direcao = mira.rightAim ? "direita" : "esquerda";
+    const direcao = (player.acao_anterior === 1) ? "direita" : "esquerda";
+    //Posição a onde a bala vai surgir
+    //mude o valor ao lado de + para alterar
     const bala = new Bala(player.position.x+50,player.position.y+50,direcao);
     balas.push(bala);
 });
@@ -287,12 +299,15 @@ document.addEventListener("click", () =>{
 document.addEventListener("keyup", ({code}) =>{
     if (code === "KeyD"){
         keys.right=false;
+        verifica_estado = true;
     }
     if (code === "KeyA"){
         keys.left=false;
+        verifica_estado = true;
     }
 })
 
+//loop para ficar dando frame reset na animação
 player.sprite.onload = () => {
     animate();
 }
