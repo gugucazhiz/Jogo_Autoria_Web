@@ -56,7 +56,7 @@ class Player{
         let linha;
         switch(this.acao){
             case "parado":
-                linha = 1;
+                linha = 2;
                 break;
             case "esquerda":
                 linha= 0;
@@ -66,6 +66,13 @@ class Player{
                 break;
             case "pulando":
                 linha = 2;
+                break;
+            case "atirandoE":
+                linha = 2;
+                break;
+            case "atirandoD":
+                linha = 2;
+                break;
         }
         ctx.drawImage(
             this.sprite,
@@ -99,8 +106,9 @@ class Player{
                 }
                 else{
                     this.acao = "parado";
+                    
                 }
-                this.estado = 0;
+
             }
 
         }
@@ -109,14 +117,27 @@ class Player{
         this.position.x += this.velocity.x;
 
 
-        if(this.velocity.x > 0 || this.velocity.x <0){
+        if(this.velocity.x !== 0  || this.acao === "pulando" ){
+            //precisei colocar esse if pois assim que ele saia da posicao "parado"
+            //ele ja somava automaticamente 0.8 ao valor de 2.4 ou 5.6 que são respectivamente posicoes
+            //do personagem parado
+            if ((this.acao === "parado") && (this.estado === 2.4 || this.estado === 5.6)) {
+                this.acao = (this.acao_anterior === 0)? "esquerda" : "direita";
+                this.estado = 0;
+                
+            }   
             this.animateFrames();
         }
         else{
-            this.estado = 0;
+            //function teste(){
+            this.acao = "parado";
+            this.estado = (this.acao_anterior === 1)? 2.4 : 5.6;
+            //}
+            
         }
     }
      animateFrames() {
+       //console.log("direcao: "+this.estado)
        this.frameContador++;
        if(this.frameContador >= this.frameDelay){
             this.estado= this.estado +0.8;
@@ -124,7 +145,7 @@ class Player{
                 this.estado=0;
             }
             this.frameContador=0;
-       }
+    }
     }
     pular(){
         if(this.position.y >= canvas.height -110){
@@ -245,6 +266,7 @@ document.addEventListener("keydown", ({code}) => {
         mira.rightAim =true;
         player.acao ="direita";
         player.acao_anterior =1;
+        player.estado = 0;
     }
     if (code === "KeyA"){
         keys.left=true;
@@ -252,6 +274,7 @@ document.addEventListener("keydown", ({code}) => {
         mira.leftAim =true;
         player.acao ="esquerda";
         player.acao_anterior = 0;
+        player.estado = 0;
     }
 
 })
