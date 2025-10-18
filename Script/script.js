@@ -71,7 +71,7 @@ class Player{
                 linha = 2;
                 break;
             case "atirandoD":
-                linha = 2;
+                linha = 3;
                 break;
         }
         ctx.drawImage(
@@ -95,6 +95,7 @@ class Player{
             if(this.velocity.y > 0){
                 this.acao = "pulando";
                 this.estado = 4;
+                this.maximoframes =5;
             }
         }
         else{
@@ -112,29 +113,35 @@ class Player{
             }
 
         }
-        //this.velocity.x
+        //velocidade normal = this.velocity.x
         //para testar frames = 0.1
         this.position.x += this.velocity.x;
 
+        if (this.position.x < 0) {
+        this.position.x = 0;
+        this.velocity.x = 0;
+        }
 
-        if(this.velocity.x !== 0  || this.acao === "pulando" ){
+        if (this.position.x + (this.largura -160) > canvas.width) {
+            this.position.x = canvas.width - (this.largura-160);
+            this.velocity.x = 0;
+        }
+
+        if(this.velocity.x !== 0  || this.acao === "pulando" || this.acao === "atirandoE" || this.acao === "atirandoD"){
             //precisei colocar esse if pois assim que ele saia da posicao "parado"
             //ele ja somava automaticamente 0.8 ao valor de 2.4 ou 5.6 que são respectivamente posicoes
             //do personagem parado
-            if ((this.acao === "parado") && (this.estado === 2.4 || this.estado === 5.6)) {
+            if ((this.acao === "parado" ) && (this.estado === 2.4 || this.estado === 5.6)) {
                 this.acao = (this.acao_anterior === 0)? "esquerda" : "direita";
                 this.estado = 0;
-            }   
+            }
             this.animateFrames();
         }
         else{
-            //function teste(){
-            this.acao = "parado";
-            this.estado = (this.acao_anterior === 1)? 2.4 : 5.6;
-            //}
-            
+            this.pararPlayer();
         }
     }
+        
      animateFrames() {
        //console.log("direcao: "+this.estado)
        this.frameContador++;
@@ -152,6 +159,10 @@ class Player{
             this.acao = "pulando";
         }
     }
+    pararPlayer(){
+            this.acao = "parado";
+            this.estado = (this.acao_anterior === 1)? 2.4 : 5.6;
+            }
 }
 
 class Bala{
@@ -161,7 +172,7 @@ class Bala{
             x,
         };
         this.size={
-            height: 4,
+            height: 10, 
             width: 5,
         };
         this.speed=20;
@@ -190,6 +201,7 @@ class Bala{
 const player = new Player();
 let balas = [];
 let canPress = true;
+let canAtirar = true;
 let keys={
     left: false,
     right: false,
@@ -205,14 +217,15 @@ function animate(){
     ctx.fillRect(0,0,8000,8000)
     
     if(keys.left){
-        if(player.velocity.x > -8){
-            player.velocity.x -= 2;
+        //if para limitar velocidade maxima
+        if(player.velocity.x > -5){
+            player.velocity.x -= 1;
         }
         
     }
     else if(keys.right){
-        if(player.velocity.x < 8){
-            player.velocity.x += 2;
+        if(player.velocity.x < 5){
+            player.velocity.x += 1;
         }
         
     }
@@ -237,9 +250,16 @@ function doAction(){
     console.log("pular");
     canPress = true;
 }
+//timeStamp do tiro
+function tiro(){
+    console.log("tiro");
+    canAtirar = true;
+}
+
 
 //refresh do estado ao sair de "parado" || "pulando"
 function limpaEstado(){
+    player.maximoframes =5;
     player.estado=0;
     verifica_estado = false;
 }
@@ -289,11 +309,26 @@ document.addEventListener("keydown", ({code}) => {
 
 })
 document.addEventListener("click", () =>{
-    const direcao = (player.acao_anterior === 1) ? "direita" : "esquerda";
-    //Posição a onde a bala vai surgir
-    //mude o valor ao lado de + para alterar
-    const bala = new Bala(player.position.x+50,player.position.y+50,direcao);
-    balas.push(bala);
+    if(canAtirar){
+        canAtirar=false;
+        const direcao = (player.acao_anterior === 1) ? "direita" : "esquerda";
+        //Posição a onde a bala vai surgir
+        //mude o valor ao lado de + para alterar
+        const bala = new Bala(player.position.x+50,player.position.y+50,direcao);
+        balas.push(bala);
+        player.acao = (player.acao_anterior === 1) ? "atirandoD" : "atirandoE";
+        player.estado =0;
+        player.maximoframes=0
+        setTimeout(() => {
+            if(player.velocity.x !== 0){
+                player.acao = (player.acao_anterior === 1) ? "direita" : "esquerda";
+            }
+            else{
+                player.pararPlayer();
+            }
+        },300);
+        setTimeout(tiro,800);
+    }
 });
 
 document.addEventListener("keyup", ({code}) =>{
