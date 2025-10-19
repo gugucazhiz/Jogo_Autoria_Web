@@ -1,29 +1,9 @@
-let canvas = document.getElementById("canvas");
-let ctx = canvas.getContext("2d");
-
-canvas.width = innerWidth;
-canvas.height = innerHeight;
-
-//const imagem = new Image();
-//imagem.src = "character.png";
-
-//const largura = 34;
-//const altura = 42;
-
-//imagem.onload = function(){
-//    ctx.drawImage(imagem,0,0,largura,altura,0,0,largura,altura);
-//};
-
-//const posy=10;
-//const posx=30;
-
-//ctx.fillStyle ="red";
-//ctx.fillRect(20,20,20,20);
 
 const gravidade = 1;
 
 class Player{
-    constructor(){
+    constructor(ctx){
+        this.ctx =ctx;
         this.position = {
             x : 20,
             y : 20,
@@ -39,6 +19,7 @@ class Player{
             x : 0,
             y : 0
         }
+        
         this.sprite = new Image();
         this.sprite.src = "Sprites/Player/personagem_correndo.png"
         //Controle Framess
@@ -74,7 +55,7 @@ class Player{
                 linha = 3;
                 break;
         }
-        ctx.drawImage(
+        this.ctx.drawImage(
             this.sprite,
             this.estado * this.largura,
             linha * this.altura,
@@ -166,7 +147,8 @@ class Player{
 }
 
 class Bala{
-    constructor(x,y,direcao){
+    constructor(x,y,direcao,ctx){
+        this.ctx =ctx;
         this.position={
             y,
             x,
@@ -180,8 +162,8 @@ class Bala{
         this.direcao = direcao;
     }  
         draw(){
-            ctx.fillStyle=this.color;
-            ctx.fillRect(this.position.x,this.position.y,
+            this.ctx.fillStyle=this.color;
+            this.ctx.fillRect(this.position.x,this.position.y,
                 this.size.width,this.size.height
             );
         }
@@ -198,8 +180,9 @@ class Bala{
 
 
 //VARIAVEIS
-const player = new Player();
-let balas = [];
+//const player = new Player(ctx);
+//let balas = [];
+/*
 let canPress = true;
 let canAtirar = true;
 let keys={
@@ -208,10 +191,14 @@ let keys={
 };
 let acao_anterior =0;
 let verifica_estado=true;
+
+*/
+
 //VARIAVEIS
 
-function animate(){
-    requestAnimationFrame(animate);
+/*
+function animate(ctx){
+    requestAnimationFrame(() => animate(ctx));
     ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.fillStyle = 'purple'
     ctx.fillRect(0,0,8000,8000)
@@ -255,14 +242,18 @@ function tiro(){
     console.log("tiro");
     canAtirar = true;
 }
-
+*/
 
 //refresh do estado ao sair de "parado" || "pulando"
+
+/*
 function limpaEstado(){
     player.maximoframes =5;
     player.estado=0;
     verifica_estado = false;
 }
+
+*/
 /*  
 
 function pular(){
@@ -277,7 +268,7 @@ function pular(){
 
 */
 
-
+/*
 document.addEventListener("keydown", ({code}) => {
     if ((code === "Space") && canPress == true ){
         canPress =false;
@@ -314,7 +305,7 @@ document.addEventListener("click", () =>{
         const direcao = (player.acao_anterior === 1) ? "direita" : "esquerda";
         //Posição a onde a bala vai surgir
         //mude o valor ao lado de + para alterar
-        const bala = new Bala(player.position.x+50,player.position.y+50,direcao);
+        const bala = new Bala(player.position.x+50,player.position.y+50,direcao,player.ctx);
         balas.push(bala);
         player.acao = (player.acao_anterior === 1) ? "atirandoD" : "atirandoE";
         player.estado =0;
@@ -342,7 +333,12 @@ document.addEventListener("keyup", ({code}) =>{
     }
 })
 
+*/
+
 //loop para ficar dando frame reset na animação
+/*
 player.sprite.onload = () => {
-    animate();
+    animate(player.ctx);
 }
+
+*/
