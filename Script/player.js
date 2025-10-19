@@ -201,7 +201,7 @@ function animate(ctx){
     requestAnimationFrame(() => animate(ctx));
     ctx.clearRect(0,0,canvas.width,canvas.height);
     ctx.fillStyle = 'purple'
-    ctx.fillRect(0,0,8000,8000)
+    ctx.fillRect(0,0,8000,8000);
     
     if(keys.left){
         //if para limitar velocidade maxima
