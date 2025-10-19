@@ -9,6 +9,6 @@ export function drawMap(ctx, mapaAtual){
 export const mapas ={
     Praia:{
         nome : "Areia Peluda",
-        background : "./Sprites/Bosses/Bossgustavo/background/backgoudestatico.png"
+        background : "./Sprites/Bosses/BossGustavo/background/backgoudEstatico.png"
     }
 };
