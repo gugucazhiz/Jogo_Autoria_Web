@@ -1,9 +1,9 @@
 
 
-export function drawMap(ctx, mapaAtual){
+export function drawMap(ctx, mapaAtual,canvas){
     const background = new Image();
     background.src = mapaAtual.background;
-    ctx.drawImage(background,0,0,1380,800);
+    ctx.drawImage(background,0,0,canvas.width,canvas.height);
 }
 
 export const mapas ={

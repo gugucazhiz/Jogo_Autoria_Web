@@ -45,7 +45,7 @@ function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     //ctx.drawImage(background, 0, 0);
-    drawMap(ctx,mapaAtual);
+    drawMap(ctx,mapaAtual,canvas);
 
     if(keys.left){
         //if para limitar velocidade maxima
@@ -99,9 +99,35 @@ function limpaEstado(){
     player.estado=0;
     verifica_estado = false;
 }
+function click_e_enter_tiro(){
+    if(canAtirar){
+        canAtirar=false;
+        const direcao = (player.acao_anterior === 1) ? "direita" : "esquerda";
+        //Posição a onde a bala vai surgir
+        //mude o valor ao lado de + para alterar
+        const bala = new Bala(player.position.x+50,player.position.y+50,direcao,player.ctx);
+        balas.push(bala);
+        player.acao = (player.acao_anterior === 1) ? "atirandoD" : "atirandoE";
+        player.estado =0;
+        player.maximoframes=0
+        setTimeout(() => {
+            if(player.velocity.x !== 0){
+                //console.log("passou aqui");
+                player.acao = (player.acao_anterior === 1) ? "direita" : "esquerda";
+                player.maximoframes=5;
+                //console.log("acao: "+player.acao);
+                //console.log("estado: "+player.estado);
+            }
+            else{
+                player.pararPlayer();
+            }
+        },200);
+        setTimeout(tiro,800);
+    }
+}
 
 document.addEventListener("keydown", ({code}) => {
-    if ((code === "Space") && canPress == true ){
+    if ((code === "Space" || code ==="KeyW") && canPress == true ){
         canPress =false;
         //Mexa aqui para mudar altura e velocidade do pulo
         player.position.y -= 20;
@@ -128,33 +154,13 @@ document.addEventListener("keydown", ({code}) => {
         player.acao ="esquerda";
         player.acao_anterior = 0;
     }
+    if(code === "Enter"){
+        click_e_enter_tiro();
+    }
 
 })
-document.addEventListener("click", () =>{
-    if(canAtirar){
-        canAtirar=false;
-        const direcao = (player.acao_anterior === 1) ? "direita" : "esquerda";
-        //Posição a onde a bala vai surgir
-        //mude o valor ao lado de + para alterar
-        const bala = new Bala(player.position.x+50,player.position.y+50,direcao,player.ctx);
-        balas.push(bala);
-        player.acao = (player.acao_anterior === 1) ? "atirandoD" : "atirandoE";
-        player.estado =0;
-        player.maximoframes=0
-        setTimeout(() => {
-            if(player.velocity.x !== 0){
-                //console.log("passou aqui");
-                player.acao = (player.acao_anterior === 1) ? "direita" : "esquerda";
-                player.maximoframes=5;
-                //console.log("acao: "+player.acao);
-                //console.log("estado: "+player.estado);
-            }
-            else{
-                player.pararPlayer();
-            }
-        },200);
-        setTimeout(tiro,800);
-    }
+document.addEventListener("click" || "Enter", () =>{
+    click_e_enter_tiro();
 });
 
 document.addEventListener("keyup", ({code}) =>{
