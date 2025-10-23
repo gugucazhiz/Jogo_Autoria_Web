@@ -9,6 +9,7 @@ canvas.height = innerHeight;
 
 import { drawMap,mapas } from "./Mapas.js";
 const player = new Player(ctx);
+const inimigo = new Inimigo(ctx);
 const balas = [];
 let mapaAtual = mapas.Praia;
 let canPress = true;
@@ -51,6 +52,9 @@ function animate() {
     // Atualiza e desenha o player
     player.update();
     player.draw();
+
+    inimigo.update(player.position.y,player.position.x);
+    inimigo.draw();
 
     // Atualiza e desenha balas
     balas.forEach((bala, index) => {
