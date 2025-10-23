@@ -8,26 +8,23 @@ canvas.height = innerHeight;
 
 //-------------------------SELETOR DE MAPAS E MUSCAS
 
-import { drawMap,mapas,addMusic } from "./Mapas.js";
-let seletorDeMapaAtual= 4;
+import { drawMap,mapas} from "./Mapas.js";
+import { playTiro,addMusic } from "./SonsEMusicas.js";
+let seletorDeMapaAtual= 2;
 let mapaAtual;
 
 switch(seletorDeMapaAtual){
     case 1:
         mapaAtual = mapas.Praia;
-        addMusic(mapaAtual);
         break;
     case 2:
         mapaAtual = mapas.Pista;
-        addMusic(mapaAtual);
         break;
     case 3:
         mapaAtual = mapas.Ceu;
-        addMusic(mapaAtual);
         break;
     case 4:
         mapaAtual = mapas.Masmorra;
-        addMusic(mapaAtual);
         break;
 }
 
@@ -50,7 +47,6 @@ animate(); // quando o mapa carregar, inicia
 
 
 // ----------------------------- VARIAVEIS JOGADOR
-
 const player = new Player(ctx);
 const inimigo = new Inimigo(ctx);
 const balas = [];
@@ -132,6 +128,7 @@ function click_e_enter_tiro(){
         //mude o valor ao lado de + para alterar
         const bala = new Bala(player.position.x+50,player.position.y+50,direcao,player.ctx);
         balas.push(bala);
+        playTiro();
         player.acao = (player.acao_anterior === 1) ? "atirandoD" : "atirandoE";
         player.estado =0;
         player.maximoframes=0
@@ -203,4 +200,5 @@ document.addEventListener("keyup", ({code}) =>{
 // Quando o sprite carregar, inicia o loop
 player.sprite.onload = () => {
     animate();
+    addMusic(mapaAtual);
 };

@@ -144,6 +144,7 @@ class Player{
             this.acao = "parado";
             this.estado = (this.acao_anterior === 1)? 2.4 : 5.6;
             }
+    
 }
 
 class Bala{
@@ -177,6 +178,10 @@ class Bala{
             this.draw();
         }
 }
+
+//-------------------------------SONS 
+
+
 
 
 //VARIAVEIS
