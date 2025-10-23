@@ -5,12 +5,37 @@ const ctx = canvas.getContext("2d");
 canvas.width = innerWidth;
 canvas.height = innerHeight;
 
-import { drawMap,mapas } from "./Mapas.js";
-let mapaAtual = mapas.Ceu;
-let background = new Image(); //variavel de imagem para descobrir tamanho do mapa
-background.src = mapaAtual.background; //recebe mapa("src" é usado em Image())
+
+//-------------------------SELETOR DE MAPAS E MUSCAS
+
+import { drawMap,mapas,addMusic } from "./Mapas.js";
+let seletorDeMapaAtual= 4;
+let mapaAtual;
+
+switch(seletorDeMapaAtual){
+    case 1:
+        mapaAtual = mapas.Praia;
+        addMusic(mapaAtual);
+        break;
+    case 2:
+        mapaAtual = mapas.Pista;
+        addMusic(mapaAtual);
+        break;
+    case 3:
+        mapaAtual = mapas.Ceu;
+        addMusic(mapaAtual);
+        break;
+    case 4:
+        mapaAtual = mapas.Masmorra;
+        addMusic(mapaAtual);
+        break;
+}
 
 
+
+
+//let background = new Image(); //variavel de imagem para descobrir tamanho do mapa
+//background.src = mapaAtual.background; //recebe mapa("src" é usado em Image())
 /*
 background.onload = function() { //vai se adaptar ao tamanho da imagem
 canvas.width = background.width;
@@ -42,8 +67,8 @@ let verifica_estado=true;
 
 
 function animate() {
-    requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    requestAnimationFrame(animate);
     //ctx.drawImage(background, 0, 0);
     drawMap(ctx,mapaAtual,canvas);
 
@@ -159,7 +184,7 @@ document.addEventListener("keydown", ({code}) => {
     }
 
 })
-document.addEventListener("click" || "Enter", () =>{
+document.addEventListener("click", () =>{
     click_e_enter_tiro();
 });
 

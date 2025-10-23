@@ -54,9 +54,9 @@ class Inimigo{
 
         const dentroX= Math.abs(this.position.x - Playerx) < hitboxX/2;
         const dentroY= Math.abs(this.position.y - Playery) < hitboxY;
-        console.log(dentroX+" "+dentroY);
+        //console.log(dentroX+" "+dentroY);
         if(dentroX && dentroY){
-            console.log("passou");
+            //console.log("passou");
             this.ctx.fillStyle = "green";
         }
     }
