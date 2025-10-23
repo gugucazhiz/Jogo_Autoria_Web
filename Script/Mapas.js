@@ -3,7 +3,7 @@
 export function drawMap(ctx, mapaAtual){
     const background = new Image();
     background.src = mapaAtual.background;
-    ctx.drawImage(background,0,0,1500,1000);
+    ctx.drawImage(background,0,0,1380,800);
 }
 
 export const mapas ={
