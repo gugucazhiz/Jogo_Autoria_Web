@@ -10,5 +10,22 @@ export const mapas ={
     Praia:{
         nome : "Areia Peluda",
         background : "./Sprites/Bosses/BossGustavo/background/backgoudEstatico.png"
+    },
+
+    Masmorra:{
+        nome : "Covil locado",
+        background :  "./Sprites/Bosses/BossAlan/background/backgoroundEstatico.png"
+    },
+
+    Pista:{
+        nome: "Parque guaxinildo",
+        background: "./Sprites/Bosses/BossDavi/background/backgoundEstatico.png"
+    },
+
+    Ceu:{
+        nome: "zona de cochilo",
+        background: "./Sprites/Bosses/BossNayan/background/backgorundEstatico.png"
     }
+
+
 };
