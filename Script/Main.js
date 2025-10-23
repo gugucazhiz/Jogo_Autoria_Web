@@ -145,7 +145,7 @@ document.addEventListener("click", () =>{
             if(player.velocity.x !== 0){
                 //console.log("passou aqui");
                 player.acao = (player.acao_anterior === 1) ? "direita" : "esquerda";
-                player.maximoframes=6;
+                player.maximoframes=5;
                 //console.log("acao: "+player.acao);
                 //console.log("estado: "+player.estado);
             }
