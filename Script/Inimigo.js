@@ -22,8 +22,8 @@ class Inimigo{
         this.spriteRun.src = "Sprites/Inimigos/Mushroom/Mushroom without VFX/Mushroom-Run.png";
         //
         this.altura =60;
-        this.largura =170;
-        this.estado = 0;       //cordenada X do spritesheet
+        this.largura =100;
+        this.estado = 0.4;       //cordenada X do spritesheet
         this.direcao = 0;      //direção atual a ser olhada
         this.maximoframes =5;  //quantidade de frames a serem usados da spritesheet
         this.frameContador=0;  //index i do if de animateFrames
@@ -40,11 +40,21 @@ class Inimigo{
             this.largura,
             this.altura+10,
             this.position.x,
-            this.position.y-20,
+            this.position.y,
             this.largura-20,
-            this.altura
+            this.altura-20
             );
         }
+    animateFrames() {
+       this.frameContador++;
+       if(this.frameContador >= this.frameDelay){
+            this.estado= this.estado +1.6;
+            if(this.estado >= this.maximoframes){
+                this.estado=0.4;
+            }
+            this.frameContador=0;
+    }
+    }
     update(Playery ,Playerx){
         const distanciaMinima = 1; // distância mínima do player
 
@@ -56,7 +66,7 @@ class Inimigo{
     // só se move se estiver longe demais
     if (distancia > distanciaMinima) {
         // normaliza o vetor direção
-        
+        this.velocity.x =3;
         const dirX = dx / distancia;
         const dirY = dy / distancia;
 
@@ -64,7 +74,7 @@ class Inimigo{
         this.position.x += dirX * this.velocity.x;
         this.position.y += dirY * this.velocity.y;
         
-        let hitboxX = 70;
+        let hitboxX = 50;
         let hitboxY = 40;
 
         const dentroX= Math.abs(this.position.x - Playerx) < hitboxX/2;
@@ -73,6 +83,7 @@ class Inimigo{
         if(dentroX && dentroY){
             //console.log("passou");
             this.ctx.fillStyle = "green";
+            this.velocity.x = 0;
         }
     }
 
@@ -85,6 +96,11 @@ class Inimigo{
         this.position.y = canvas.height - 80;
     }
     this.draw();
+    console.log(this.velocity.x+" velocidade x")
+    if(!(this.velocity.x == 0)){
+        this.animateFrames();
+    }
+    
 }
 }
         
