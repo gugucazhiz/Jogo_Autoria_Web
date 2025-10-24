@@ -63,7 +63,7 @@ let verifica_estado=true;
 
 
 function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //ctx.clearRect(0, 0, canvas.width, canvas.height);
     requestAnimationFrame(animate);
     //ctx.drawImage(background, 0, 0);
     drawMap(ctx,mapaAtual,canvas);
@@ -92,7 +92,6 @@ function animate() {
     player.draw();
 
     inimigo.update(player.position.y,player.position.x);
-    inimigo.draw();
 
     // Atualiza e desenha balas
     balas.forEach((bala, index) => {

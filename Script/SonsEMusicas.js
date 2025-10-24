@@ -2,7 +2,7 @@ import {mapas} from "./Mapas.js";
 
 export function playTiro(){
             const tiro = new Audio("./Audio/Player/tiro_Sound.mpeg");
-            tiro.volume = 1;
+            tiro.volume = 0.3;
             tiro.play();
         }
 
@@ -10,10 +10,10 @@ export function addMusic(musicaAtual){
     const music = new Audio(musicaAtual.musicPath)
     music.loop = true;
     if(musicaAtual === mapas.Praia || musicaAtual === mapas.Masmorra){
-        music.volume = 0.08;
+        music.volume = 0.07;
     }
     else{
-        music.volume = 0.1;
+        music.volume = 0.08;
     }
     ;
     console.log(musicaAtual.musicPath);
