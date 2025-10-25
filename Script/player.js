@@ -158,7 +158,7 @@ class Bala{
             height: 10, 
             width: 5,
         };
-        this.speed=20;
+        this.speed=10;
         this.color = "red";
         this.direcao = direcao;
     }  

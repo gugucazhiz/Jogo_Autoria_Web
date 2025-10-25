@@ -48,7 +48,9 @@ animate(); // quando o mapa carregar, inicia
 
 // ----------------------------- VARIAVEIS JOGADOR
 const player = new Player(ctx);
+const inimigos = [];
 const inimigo = new Inimigo(ctx);
+inimigos.push(inimigo);
 const balas = [];
 let canPress = true;
 let canAtirar = true;
@@ -91,12 +93,28 @@ function animate() {
     player.update();
     player.draw();
 
-    inimigo.update(player.position.y,player.position.x);
+    inimigos.forEach((inimigo, index) => {
+        if(inimigo.life > 2){
+            inimigos.splice(index,1)
+        }
+        inimigo.update(player.position.y,player.position.x);
+    });
+    
 
     // Atualiza e desenha balas
     balas.forEach((bala, index) => {
+        let removeBala = false;
         bala.update();
         if (bala.position.x > canvas.width || bala.position.x < 0) {
+            removeBala = true;
+        }
+        console.log(inimigo.verificaColisao(bala))
+        if (inimigo.verificaColisao(bala)){
+            inimigo.life += 1;
+            removeBala = true;
+            console.log(inimigo.life);
+        }
+        if(removeBala){
             balas.splice(index, 1);
         }
     });
@@ -125,8 +143,16 @@ function click_e_enter_tiro(){
         const direcao = (player.acao_anterior === 1) ? "direita" : "esquerda";
         //Posição a onde a bala vai surgir
         //mude o valor ao lado de + para alterar
-        const bala = new Bala(player.position.x+50,player.position.y+50,direcao,player.ctx);
-        balas.push(bala);
+        if(player.acao_anterior === 1){
+            //o tiro para a direcao esquerda sai um pouco do esquadro do player
+            const bala = new Bala(player.position.x+47,player.position.y+50,direcao,player.ctx);
+            balas.push(bala);
+        }
+        else{
+            const bala = new Bala(player.position.x,player.position.y+50,direcao,player.ctx);
+            balas.push(bala);
+        }
+        
         playTiro();
         player.acao = (player.acao_anterior === 1) ? "atirandoD" : "atirandoE";
         player.estado =0;

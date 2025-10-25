@@ -21,14 +21,14 @@ class Inimigo{
         this.spriteRun = new Image();
         this.spriteRun.src = "Sprites/Inimigos/Mushroom/Mushroom without VFX/Mushroom-Run.png";
         //
+        this.life = 0;
         this.altura =60;
         this.largura =100;
         this.estado = 0.4;       //cordenada X do spritesheet
-        this.direcao = 0;      //direção atual a ser olhada
+        this.direcao = 1;   //1 esquerda || 3 direita
         this.maximoframes =5;  //quantidade de frames a serem usados da spritesheet
         this.frameContador=0;  //index i do if de animateFrames
         this.frameDelay =10;   //Fps
-        this.acao = "parado";  //Animacao Atual
         this.acao_anterior =0; //ultima direção olhada
     }
 
@@ -36,7 +36,7 @@ class Inimigo{
         this.ctx.drawImage(
             this.spriteRun,
             this.estado * this.largura,
-            1 * this.altura,
+            this.direcao * this.altura,
             this.largura,
             this.altura+10,
             this.position.x,
@@ -46,15 +46,26 @@ class Inimigo{
             );
         }
     animateFrames() {
+        
        this.frameContador++;
+       this.direcao = this.acao_anterior;
        if(this.frameContador >= this.frameDelay){
             this.estado= this.estado +1.6;
             if(this.estado >= this.maximoframes){
                 this.estado=0.4;
             }
             this.frameContador=0;
+       }
     }
-    }
+    verificaColisao(bala) {
+        return (
+            bala.position.x < this.position.x + (this.largura - 20) && 
+            bala.position.x + bala.size.width > this.position.x &&
+             bala.position.y < this.position.y + (this.altura - 20) && 
+            bala.position.y + bala.size.height > this.position.y
+        );
+        }
+    
     update(Playery ,Playerx){
         const distanciaMinima = 1; // distância mínima do player
 
@@ -74,7 +85,14 @@ class Inimigo{
         this.position.x += dirX * this.velocity.x;
         this.position.y += dirY * this.velocity.y;
         
-        let hitboxX = 50;
+        if(Playerx > this.position.x){
+            this.acao_anterior = 3;
+        }
+        else{
+            this.acao_anterior =1;
+        }
+
+        let hitboxX = 40;
         let hitboxY = 40;
 
         const dentroX= Math.abs(this.position.x - Playerx) < hitboxX/2;
@@ -85,9 +103,10 @@ class Inimigo{
             this.ctx.fillStyle = "green";
             this.velocity.x = 0;
         }
+        
     }
 
-    // gravidade opcional (caso use física)
+    // gravidade opciona
     if (this.position.y < canvas.height - 120) {
         this.velocity.y += this.gravidade;
         this.position.y += this.velocity.y;
@@ -96,13 +115,15 @@ class Inimigo{
         this.position.y = canvas.height - 80;
     }
     this.draw();
-    console.log(this.velocity.x+" velocidade x")
+    //console.log(this.velocity.x+" velocidade x")
     if(!(this.velocity.x == 0)){
         this.animateFrames();
     }
     
 }
 }
+
+
         
         
         
