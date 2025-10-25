@@ -156,24 +156,46 @@ class Bala{
         };
         this.size={
             height: 10, 
-            width: 5,
+            width: 30,
         };
+        this.spriteBala = new Image()
+        this.spriteBala.src = "Sprites/Player/Powers.png"
+        //Controle Framess
+        this.altura =90;
+        this.largura =85;
+        this.estado = 1;       //cordenada X do spritesheet
+        this.maximoframes =5;  //quantidade de frames a serem usados da spritesheet
+        this.frameContador=0;  //index i do if de animateFrames
+        this.frameDelay =10;   //Fps
+        this.acao = "parado";  //Animacao Atual
+        this.acao_anterior =0; //ultima direção olhada
+
         this.speed=10;
-        this.color = "red";
         this.direcao = direcao;
+        this.lado;    //1.6 e 1.0
+        
     }  
         draw(){
-            this.ctx.fillStyle=this.color;
-            this.ctx.fillRect(this.position.x,this.position.y,
-                this.size.width,this.size.height
+            this.ctx.drawImage(
+            this.spriteBala,
+            this.lado * this.largura,
+            0 * this.altura,
+            this.largura-15,
+            this.altura-10,
+            this.position.x,
+            this.position.y-50,
+            this.largura,
+            this.altura
             );
         }
         update() {
             if(this.direcao === "direita"){
                 this.position.x += this.speed;
+                this.lado = 1.0
             }
             else{
                 this.position.x -= this.speed;
+                this.lado = 1.6
             }
             this.draw();
         }

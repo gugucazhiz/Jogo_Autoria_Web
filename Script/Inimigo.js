@@ -4,7 +4,7 @@
 class Inimigo{
     constructor(ctx){
         this.position = {
-            x: 1,
+            x: 600,
             y: 1
         }
         this.size = {
@@ -21,12 +21,14 @@ class Inimigo{
         this.spriteRun = new Image();
         this.spriteRun.src = "Sprites/Inimigos/Mushroom/Mushroom without VFX/Mushroom-Run.png";
         //
+        this.morrendo = false;
+        this.vivo = true;
         this.life = 0;
         this.altura =60;
         this.largura =100;
         this.estado = 0.4;       //cordenada X do spritesheet
-        this.direcao = 1;   //1 esquerda || 3 direita
-        this.maximoframes =5;  //quantidade de frames a serem usados da spritesheet
+        this.direcao = 3;   //1 esquerda || 3 direita  || 5 morrendo esquerda || 7 morrendo direita
+        this.maximoframes =12;  //quantidade de frames a serem usados da spritesheet
         this.frameContador=0;  //index i do if de animateFrames
         this.frameDelay =10;   //Fps
         this.acao_anterior =0; //ultima direção olhada
@@ -35,7 +37,7 @@ class Inimigo{
     draw() {
         this.ctx.drawImage(
             this.spriteRun,
-            this.estado * this.largura,
+            this.estado* this.largura,
             this.direcao * this.altura,
             this.largura,
             this.altura+10,
@@ -46,20 +48,28 @@ class Inimigo{
             );
         }
     animateFrames() {
-        
-       this.frameContador++;
-       this.direcao = this.acao_anterior;
-       if(this.frameContador >= this.frameDelay){
-            this.estado= this.estado +1.6;
-            if(this.estado >= this.maximoframes){
-                this.estado=0.4;
+            this.frameContador++;
+            this.direcao = this.acao_anterior;
+            if(this.frameContador >= this.frameDelay){
+                    this.estado= this.estado +1.6;
+                    if(this.estado >= this.maximoframes){
+                        this.estado=0.4;
+                    }
+                    this.frameContador=0;
             }
-            this.frameContador=0;
-       }
+            return
     }
+    morreu(){
+        this.morrendo =true;
+        this.acao_anterior = (this.acao_anterior === 3)? 7 : 5;
+        this.maximoframes = 11.4
+        console.log(this.acao_anterior +" 5 ou 7")
+        this.animateFrames();
+    }
+    
     verificaColisao(bala) {
         return (
-            bala.position.x < this.position.x + (this.largura - 20) && 
+            bala.position.x < this.position.x + (this.largura - 70) && 
             bala.position.x + bala.size.width > this.position.x &&
              bala.position.y < this.position.y + (this.altura - 20) && 
             bala.position.y + bala.size.height > this.position.y
@@ -82,26 +92,27 @@ class Inimigo{
         const dirY = dy / distancia;
 
         // move o inimigo em direção ao player
-        this.position.x += dirX * this.velocity.x;
-        this.position.y += dirY * this.velocity.y;
-        
-        if(Playerx > this.position.x){
+        if(!(this.morrendo)){
+            this.position.x += dirX * this.velocity.x;
+            this.position.y += dirY * this.velocity.y;
+
+            if(Playerx > this.position.x){
             this.acao_anterior = 3;
+            }
+            else{
+                this.acao_anterior =1;
+            }
         }
-        else{
-            this.acao_anterior =1;
-        }
+        
 
         let hitboxX = 40;
         let hitboxY = 40;
-
+        console.log(this.velocity.y)
         const dentroX= Math.abs(this.position.x - Playerx) < hitboxX/2;
         const dentroY= Math.abs(this.position.y - Playery) < hitboxY;
         //console.log(dentroX+" "+dentroY);
         if(dentroX && dentroY){
             //console.log("passou");
-            this.ctx.fillStyle = "green";
-            this.velocity.x = 0;
         }
         
     }
@@ -110,7 +121,8 @@ class Inimigo{
     if (this.position.y < canvas.height - 120) {
         this.velocity.y += this.gravidade;
         this.position.y += this.velocity.y;
-    } else {
+    } 
+    else{
         this.velocity.y = 0;
         this.position.y = canvas.height - 80;
     }
@@ -122,7 +134,6 @@ class Inimigo{
     
 }
 }
-
 
         
         

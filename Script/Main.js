@@ -93,11 +93,14 @@ function animate() {
     player.update();
     player.draw();
 
-    inimigos.forEach((inimigo, index) => {
-        if(inimigo.life > 2){
-            inimigos.splice(index,1)
-        }
-        inimigo.update(player.position.y,player.position.x);
+    inimigos.forEach(async(inimigo, index) => {
+        if (inimigo.life > 2 && !inimigo.morrendo) {
+        inimigo.morrendo = true; // impede chamar de novo
+        inimigo.vivo = false;
+        await inimigoMorreu(inimigo, index);
+    } else if (inimigo.vivo){
+        inimigo.update(player.position.y, player.position.x);
+    }
     });
     
 
@@ -109,7 +112,7 @@ function animate() {
             removeBala = true;
         }
         console.log(inimigo.verificaColisao(bala))
-        if (inimigo.verificaColisao(bala)){
+        if ((inimigo.verificaColisao(bala)) && inimigo.vivo){
             inimigo.life += 1;
             removeBala = true;
             console.log(inimigo.life);
@@ -120,7 +123,15 @@ function animate() {
     });
 }
 
-
+async function inimigoMorreu(inimigo,index){
+                inimigo.morreu();
+                await esperar(1100);
+                console.log("deletou")
+                inimigos.splice(index,1)
+            }
+function esperar(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 //            ------------------           ACOES DO JOGADOR               --------------------
 function doAction(){
     console.log("pular");
