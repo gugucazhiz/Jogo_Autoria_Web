@@ -47,7 +47,7 @@ animate(); // quando o mapa carregar, inicia
 
 
 // ----------------------------- VARIAVEIS JOGADOR
-const player = new Player(ctx);
+const player = new Player(ctx,canvas);
 const inimigos = [];
 const inimigo = new Inimigo(ctx);
 inimigos.push(inimigo);
@@ -96,10 +96,9 @@ function animate() {
     inimigos.forEach(async(inimigo, index) => {
         if (inimigo.life > 2 && !inimigo.morrendo) {
         inimigo.morrendo = true; // impede chamar de novo
-        inimigo.vivo = false;
         await inimigoMorreu(inimigo, index);
     } else if (inimigo.vivo){
-        inimigo.update(player.position.y, player.position.x);
+        inimigo.update(player.position.y, player.position.x,player);
     }
     });
     
@@ -125,9 +124,10 @@ function animate() {
 
 async function inimigoMorreu(inimigo,index){
                 inimigo.morreu();
-                await esperar(1100);
+                await esperar(900);
                 console.log("deletou")
                 inimigos.splice(index,1)
+                inimigo.vivo = false;
             }
 function esperar(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));

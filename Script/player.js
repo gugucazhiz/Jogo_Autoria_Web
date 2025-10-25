@@ -2,10 +2,15 @@
 const gravidade = 1;
 
 class Player{
-    constructor(ctx){
+    constructor(ctx,canvas){
         this.ctx =ctx;
         this.position = {
             x : 20,
+            y : 20,
+        }
+        this.positionVida = {
+            //mexa somente no numero fora dos parenteses
+            x : (canvas.width/2)-90,
             y : 20,
         }
 
@@ -19,9 +24,13 @@ class Player{
             x : 0,
             y : 0
         }
-        
         this.sprite = new Image();
         this.sprite.src = "Sprites/Player/personagem_correndo.png"
+        this.spriteVida = new Image();
+        this.spriteVida.src = "Sprites/Hud/vidas.png"
+        //vida
+        this.life =3;
+        this.hudLife =2.7;
         //Controle Framess
         this.altura =210;
         this.largura =210;
@@ -55,6 +64,7 @@ class Player{
                 linha = 3;
                 break;
         }
+        // playear
         this.ctx.drawImage(
             this.sprite,
             this.estado * this.largura,
@@ -66,6 +76,18 @@ class Player{
             this.largura-120,
             this.altura-110
             );
+        //Vida do player
+        this.ctx.drawImage(
+            this.spriteVida,
+            0 * this.largura,
+            this.hudLife * this.altura-30, //2.7 full Life //1.8  2/3 life // 0.9 1/3 life // 0.1 = 0 life
+            this.largura+250,
+            this.altura-10,
+            this.positionVida.x,
+            this.positionVida.y,
+            this.largura,
+            this.altura-110
+        );
         
     }
     update(){
@@ -144,7 +166,26 @@ class Player{
             this.acao = "parado";
             this.estado = (this.acao_anterior === 1)? 2.4 : 5.6;
             }
-    
+
+
+    helthAtual(){
+        this.life--;
+        //2.7 full Life //1.8  2/3 life // 0.9 1/3 life // 0.1 = 0 life
+        switch(this.life){
+            case 3:
+                this.hudLife = 2.7
+                break;
+            case 2:
+                this.hudLife = 1.7
+                break;
+            case 1:
+                this.hudLife = 0.9
+                break;
+            case 0:
+                this.hudLife = 0
+                break;
+        }
+    }
 }
 
 class Bala{

@@ -76,7 +76,7 @@ class Inimigo{
         );
         }
     
-    update(Playery ,Playerx){
+    update(Playery ,Playerx,player){
         const distanciaMinima = 1; // distância mínima do player
 
     // diferença entre as posições
@@ -113,6 +113,9 @@ class Inimigo{
         //console.log(dentroX+" "+dentroY);
         if(dentroX && dentroY){
             //console.log("passou");
+            this.velocity.x= 5;
+            this.position.x -=  (dirX*60) * this.velocity.x;
+            player.helthAtual();
         }
         
     }
