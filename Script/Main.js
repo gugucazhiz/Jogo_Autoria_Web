@@ -12,7 +12,8 @@ import { drawMap,mapas} from "./Mapas.js";
 import { playTiro,addMusic } from "./SonsEMusicas.js";
 
 
-let seletorDeMapaAtual =2;
+let seletorDeMapaAtual =1;
+let ultimoMapa = seletorDeMapaAtual;
 let mapaAtual;
 function selecionarMapa(seletorDeMapaAtual){
     
@@ -157,6 +158,7 @@ function desenharTelaDeMorte() {
     //passa parametros da tela de morte
     selecionarMapa(5);
     drawMap(ctx,mapaAtual,canvas);
+    addMusic(mapaAtual);
     ctx.fillStyle = "black";
     ctx.textAlign = "center";
     ctx.font = "40px Arial";
@@ -179,7 +181,7 @@ function limpaEstado(){
     verifica_estado = false;
 }
 function click_e_enter_tiro(){
-    if(canAtirar){
+    if(canAtirar && !(player.gameOver)){
         canAtirar=false;
         const direcao = (player.acao_anterior === 1) ? "direita" : "esquerda";
         //Posição a onde a bala vai surgir
@@ -220,8 +222,9 @@ function reiniciarJogo(){
         player.hudLife = 2.7;
         player.position.x = 20;
         player.position.y = 20;
-        selecionarMapa(2);
         inimigos.length = 0
+        selecionarMapa(ultimoMapa);
+        addMusic(mapaAtual);
         inimigos.push(new Inimigo(ctx,600,1));
 }
 
@@ -280,6 +283,6 @@ document.addEventListener("keyup", ({code}) =>{
 
 // Quando o sprite carregar, inicia o loop
 player.sprite.onload = () => {
-    animate();
     addMusic(mapaAtual);
+    animate();
 };

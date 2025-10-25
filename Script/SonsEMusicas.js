@@ -1,5 +1,7 @@
 import {mapas} from "./Mapas.js";
 
+let currentMusic = null;
+
 export function playTiro(){
             const tiro = new Audio("./Audio/Player/tiro_Sound.mpeg");
             tiro.volume = 0.3;
@@ -7,6 +9,13 @@ export function playTiro(){
         }
 
 export function addMusic(musicaAtual){
+
+    //verificar se ja tem musica tocando
+    if (currentMusic) {
+        currentMusic.pause();
+        currentMusic.currentTime = 0;
+    }
+
     const music = new Audio(musicaAtual.musicPath)
     music.loop = true;
     if(musicaAtual === mapas.Praia || musicaAtual === mapas.Masmorra){
@@ -32,4 +41,6 @@ export function addMusic(musicaAtual){
 
     document.addEventListener("click", iniciarMusica);
     document.addEventListener("keydown", iniciarMusica);
+
+    currentMusic = music;
 }
