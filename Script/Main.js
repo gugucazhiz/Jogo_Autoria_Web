@@ -9,7 +9,7 @@ canvas.height = innerHeight;
 //-------------------------SELETOR DE MAPAS E MUSCAS
 
 import { drawMap,mapas} from "./Mapas.js";
-import { playTiro,addMusic } from "./SonsEMusicas.js";
+import { playTiro,addMusic} from "./SonsEMusicas.js";
 
 
 let seletorDeMapaAtual =1;
@@ -158,7 +158,7 @@ function desenharTelaDeMorte() {
     //passa parametros da tela de morte
     selecionarMapa(5);
     drawMap(ctx,mapaAtual,canvas);
-    addMusic(mapaAtual);
+    //addMusic(mapaAtual);
     ctx.fillStyle = "black";
     ctx.textAlign = "center";
     ctx.font = "40px Arial";
@@ -224,7 +224,7 @@ function reiniciarJogo(){
         player.position.y = 20;
         inimigos.length = 0
         selecionarMapa(ultimoMapa);
-        addMusic(mapaAtual);
+        //addMusic(mapaAtual);
         inimigos.push(new Inimigo(ctx,600,1));
 }
 
