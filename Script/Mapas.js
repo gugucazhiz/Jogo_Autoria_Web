@@ -56,7 +56,11 @@ export const mapas ={
         nome: "zona de cochilo",
         background: "./Sprites/Bosses/BossNayan/background/backgorundEstatico.png",
         musicPath: "./Audio/Mapas/BossNayan/audio_nayan.mpeg"
+    },
+
+    DeathScreen:{
+        nome: "Tela De Morte",
+        background: "Sprites/Hud/youDied.png",
+        musicPath: ""
     }
-
-
 };

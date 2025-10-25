@@ -10,23 +10,31 @@ canvas.height = innerHeight;
 
 import { drawMap,mapas} from "./Mapas.js";
 import { playTiro,addMusic } from "./SonsEMusicas.js";
-let seletorDeMapaAtual= 2;
-let mapaAtual;
 
-switch(seletorDeMapaAtual){
-    case 1:
-        mapaAtual = mapas.Praia;
-        break;
-    case 2:
-        mapaAtual = mapas.Pista;
-        break;
-    case 3:
-        mapaAtual = mapas.Ceu;
-        break;
-    case 4:
-        mapaAtual = mapas.Masmorra;
-        break;
+
+let seletorDeMapaAtual =2;
+let mapaAtual;
+function selecionarMapa(seletorDeMapaAtual){
+    
+    switch(seletorDeMapaAtual){
+        case 1:
+            mapaAtual = mapas.Praia;
+            break;
+        case 2:
+            mapaAtual = mapas.Pista;
+            break;
+        case 3:
+            mapaAtual = mapas.Ceu;
+            break;
+        case 4:
+            mapaAtual = mapas.Masmorra;
+            break;
+        case 5:
+            mapaAtual = mapas.DeathScreen;
+            break;
+    }
 }
+
 
 
 
@@ -46,11 +54,11 @@ animate(); // quando o mapa carregar, inicia
 
 
 
-// ----------------------------- VARIAVEIS JOGADOR
+// ----------------------------- VARIAVEIS Principais
 const player = new Player(ctx,canvas);
 const inimigos = [];
-const inimigo = new Inimigo(ctx);
-inimigos.push(inimigo);
+inimigos.push(new Inimigo(ctx,1000,1));
+inimigos.push(new Inimigo(ctx,600,1));
 const balas = [];
 let canPress = true;
 let canAtirar = true;
@@ -60,67 +68,79 @@ let keys={
 };
 let acao_anterior =0;
 let verifica_estado=true;
-// ----------------------------- VARIAVEIS JOGADOR
+selecionarMapa(seletorDeMapaAtual);
+// ----------------------------- VARIAVEIS Principais
 
 
 
 function animate() {
     //ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // 
     requestAnimationFrame(animate);
-    //ctx.drawImage(background, 0, 0);
-    drawMap(ctx,mapaAtual,canvas);
-
-    if(keys.left){
-        //if para limitar velocidade maxima
-        if(player.velocity.x > -5){
-            player.velocity.x -= 1;
+    if(player.gameOver){
+        desenharTelaDeMorte();
+    }
+    else{
+        //ctx.drawImage(background, 0, 0);
+        drawMap(ctx,mapaAtual,canvas);
+        if(keys.left){
+            //if para limitar velocidade maxima
+            if(player.velocity.x > -5){
+                player.velocity.x -= 1;
+            }
+            
+        }
+        else if(keys.right){
+            if(player.velocity.x < 5){
+                player.velocity.x += 1;
+            }
+            
+        //se "A" nem "D" estiverem sendo pressionados
+        //a velocidade do player zera.  
+        }else{
+            player.velocity.x = 0;
         }
         
-    }
-    else if(keys.right){
-        if(player.velocity.x < 5){
-            player.velocity.x += 1;
-        }
         
-    //se "A" nem "D" estiverem sendo pressionados
-    //a velocidade do player zera.  
-    }else{
-        player.velocity.x = 0;
-    }
-    
-    
-    // Atualiza e desenha o player
-    player.update();
-    player.draw();
+        // Atualiza e desenha o player
+        player.update();
+        player.draw();
 
-    inimigos.forEach(async(inimigo, index) => {
-        if (inimigo.life > 2 && !inimigo.morrendo) {
-        inimigo.morrendo = true; // impede chamar de novo
-        await inimigoMorreu(inimigo, index);
-    } else if (inimigo.vivo){
-        inimigo.update(player.position.y, player.position.x,player);
-    }
-    });
-    
+        inimigos.forEach(async(inimigo, index) => {
+            if (inimigo.life > 2 && !inimigo.morrendo) {
+            inimigo.morrendo = true; // impede chamar de novo
+            await inimigoMorreu(inimigo, index);
+        } else if (inimigo.vivo){
+            inimigo.update(player.position.y, player.position.x,player);
+        }
+        });
+        
 
-    // Atualiza e desenha balas
-    balas.forEach((bala, index) => {
-        let removeBala = false;
-        bala.update();
-        if (bala.position.x > canvas.width || bala.position.x < 0) {
-            removeBala = true;
-        }
-        console.log(inimigo.verificaColisao(bala))
-        if ((inimigo.verificaColisao(bala)) && inimigo.vivo){
-            inimigo.life += 1;
-            removeBala = true;
-            console.log(inimigo.life);
-        }
-        if(removeBala){
-            balas.splice(index, 1);
-        }
-    });
+        // Atualiza e desenha balas
+        balas.forEach((bala, index) => {
+            let removeBala = false;
+            bala.update();
+            if (bala.position.x > canvas.width || bala.position.x < 0) {
+                removeBala = true;
+            }
+
+            
+            inimigos.forEach((inimigo, indexInimigo) => {
+                console.log(inimigo.verificaColisao(bala));
+                if (inimigo.vivo && inimigo.verificaColisao(bala)) {
+                    inimigo.life += 1;
+                    removeBala = true;
+                    }
+            });
+
+            if(removeBala){
+                balas.splice(index, 1);
+            }
+        });
+    }
 }
+
+//            ------------------    ACOES DO JOGADOR  E Principais Funcoes              --------------------
 
 async function inimigoMorreu(inimigo,index){
                 inimigo.morreu();
@@ -132,7 +152,17 @@ async function inimigoMorreu(inimigo,index){
 function esperar(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-//            ------------------           ACOES DO JOGADOR               --------------------
+//Tela De Morte Player
+function desenharTelaDeMorte() {
+    //passa parametros da tela de morte
+    selecionarMapa(5);
+    drawMap(ctx,mapaAtual,canvas);
+    ctx.fillStyle = "black";
+    ctx.textAlign = "center";
+    ctx.font = "40px Arial";
+    ctx.fillText("Pressione 'U' para reiniciar", canvas.width / 2, canvas.height / 2 +250);
+}
+
 function doAction(){
     console.log("pular");
     canPress = true;
@@ -184,6 +214,17 @@ function click_e_enter_tiro(){
     }
 }
 
+function reiniciarJogo(){
+        player.gameOver =false;
+        player.life = 3;
+        player.hudLife = 2.7;
+        player.position.x = 20;
+        player.position.y = 20;
+        selecionarMapa(2);
+        inimigos.length = 0
+        inimigos.push(new Inimigo(ctx,600,1));
+}
+
 document.addEventListener("keydown", ({code}) => {
     if ((code === "Space" || code ==="KeyW") && canPress == true ){
         canPress =false;
@@ -215,6 +256,9 @@ document.addEventListener("keydown", ({code}) => {
     if(code === "Enter"){
         click_e_enter_tiro();
     }
+    if(code === "KeyU" && player.gameOver){
+        reiniciarJogo();
+    }
 
 })
 document.addEventListener("click", () =>{
@@ -231,6 +275,7 @@ document.addEventListener("keyup", ({code}) =>{
         verifica_estado = true;
     }
 })
+
 
 
 // Quando o sprite carregar, inicia o loop

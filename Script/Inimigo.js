@@ -2,10 +2,10 @@
 
 
 class Inimigo{
-    constructor(ctx){
+    constructor(ctx,positionx,positiony){
         this.position = {
-            x: 600,
-            y: 1
+            x: positionx,
+            y: positiony
         }
         this.size = {
             h : 20,
@@ -111,7 +111,7 @@ class Inimigo{
         const dentroX= Math.abs(this.position.x - Playerx) < hitboxX/2;
         const dentroY= Math.abs(this.position.y - Playery) < hitboxY;
         //console.log(dentroX+" "+dentroY);
-        if(dentroX && dentroY){
+        if((dentroX && dentroY) && this.morrendo === false){
             //console.log("passou");
             this.velocity.x= 5;
             this.position.x -=  (dirX*60) * this.velocity.x;

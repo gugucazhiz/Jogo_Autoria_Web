@@ -29,6 +29,7 @@ class Player{
         this.spriteVida = new Image();
         this.spriteVida.src = "Sprites/Hud/vidas.png"
         //vida
+        this.gameOver= false;
         this.life =3;
         this.hudLife =2.7;
         //Controle Framess
@@ -183,6 +184,7 @@ class Player{
                 break;
             case 0:
                 this.hudLife = 0
+                this.gameOver = true;
                 break;
         }
     }
