@@ -80,7 +80,7 @@
         {
          "columns":42,
          "firstgid":1,
-         "image":"..\/Documentos\/GitHub\/Jogo_Autoria_Web\/Sprites\/Bosses\/BossAlan\/background\/backgoroundEstatico.png",
+         "image":"/Sprites\/Bosses\/BossAlan\/background\/backgoroundEstatico.png",
          "imageheight":768,
          "imagewidth":1344,
          "margin":0,
@@ -94,7 +94,7 @@
         {
          "columns":42,
          "firstgid":1009,
-         "image":"\ud83d\udd8c\ufe0f \ud83d\udcf9\/game Autoria web\/background\/backgoroundEstatico.png",
+         "image":"/Sprites\/Bosses\/BossAlan\/background\/backgoroundEstatico.png",
          "imageheight":768,
          "imagewidth":1344,
          "margin":0,

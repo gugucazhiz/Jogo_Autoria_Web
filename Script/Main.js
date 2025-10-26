@@ -52,6 +52,7 @@ animate(); // quando o mapa carregar, inicia
 
 
 // ----------------------------- VARIAVEIS Principais
+const platform = new Platform(ctx)
 const player = new Player(ctx,canvas);
 const inimigos = [];
 inimigos.push(new Inimigo(ctx,1000,1));
@@ -100,9 +101,12 @@ function animate() {
         
         
         // Atualiza e desenha o player
+        
         player.update();
+        platform.checkCollision(player);
         player.draw();
-
+        platform.draw();
+        
         inimigos.forEach(async(inimigo, index) => {
             if (inimigo.life > 2 && !inimigo.morrendo) {
             inimigo.morrendo = true; // impede chamar de novo
@@ -221,7 +225,7 @@ function click_e_enter_tiro(){
                 player.pararPlayer();
             }
         },200);
-        setTimeout(tiro,800);
+        setTimeout(tiro,700);
     }
 }
 
@@ -229,7 +233,7 @@ function reiniciarJogo(){
         player.gameOver =false;
         player.life = 3;
         player.hudLife = 2.7;
-        player.position.x = 60;
+        player.position.x = 70;
         player.position.y = canvas.height;
         inimigos.length = 0
         selecionarMapa(mapaAtual);
@@ -242,9 +246,9 @@ document.addEventListener("keydown", ({code}) => {
     if ((code === "Space" || code ==="KeyW") && canPress == true ){
         canPress =false;
         //Mexa aqui para mudar altura e velocidade do pulo
-        player.position.y -= 20;
-        player.velocity.y = -10;
-        setTimeout(doAction,500);
+        player.position.y -= 30;
+        player.velocity.y = -30;
+        setTimeout(doAction,700);
         
     }
     if (code === "KeyD"){
