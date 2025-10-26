@@ -9,7 +9,7 @@ canvas.height = innerHeight;
 //-------------------------SELETOR DE MAPAS E MUSCAS
 
 import { drawMap,mapas} from "./Mapas.js";
-import { playTiro,addMusic} from "./SonsEMusicas.js";
+import { playTiro,addMusic,abaixarVolume} from "./SonsEMusicas.js";
 
 
 let seletorDeMapaAtual =1;
@@ -34,6 +34,7 @@ function selecionarMapa(seletorDeMapaAtual){
             mapaAtual = mapas.DeathScreen;
             break;
     }
+    ultimoMapa = (seletorDeMapaAtual === 5) ? ultimoMapa : seletorDeMapaAtual;
 }
 
 
@@ -153,10 +154,13 @@ async function inimigoMorreu(inimigo,index){
 function esperar(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+
 //Tela De Morte Player
 function desenharTelaDeMorte() {
     //passa parametros da tela de morte
     selecionarMapa(5);
+    //addMusic(mapas.DeathScreen)
     drawMap(ctx,mapaAtual,canvas);
     //addMusic(mapaAtual);
     ctx.fillStyle = "black";
@@ -224,6 +228,7 @@ function reiniciarJogo(){
         player.position.y = 20;
         inimigos.length = 0
         selecionarMapa(ultimoMapa);
+        addMusic(mapaAtual);
         //addMusic(mapaAtual);
         inimigos.push(new Inimigo(ctx,600,1));
 }

@@ -61,6 +61,6 @@ export const mapas ={
     DeathScreen:{
         nome: "Tela De Morte",
         background: "Sprites/Hud/youDied.png",
-        musicPath: "Audio/Mapas/TelaDeMorte/DeathSong.mp3"
+        musicPath: "./Audio/Mapas/TelaDeMorte/DeathSong.mp3"
     }
 };
