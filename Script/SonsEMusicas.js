@@ -23,12 +23,8 @@ export function abaixarVolume(musicaAtual){
 }
 
 export function addMusic(musicaAtual){
-    if(musicaAtual === mapas.DeathScreen){
-        musica.src = (musicaAtual.musicPath)
-    }
-    else{
-        musica.src = (musicaAtual.musicPath)
-    }
+    musica.src = (musicaAtual.musicPath)
+    
     console.log(musica.src);
     musica.loop= true;
     

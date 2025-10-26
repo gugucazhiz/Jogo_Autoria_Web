@@ -5,8 +5,8 @@ class Player{
     constructor(ctx,canvas){
         this.ctx =ctx;
         this.position = {
-            x : 20,
-            y : 20,
+            x : 60,
+            y : canvas.height,
         }
         this.positionVida = {
             //mexa somente no numero fora dos parenteses

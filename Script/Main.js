@@ -13,7 +13,6 @@ import { playTiro,addMusic,abaixarVolume} from "./SonsEMusicas.js";
 
 
 let seletorDeMapaAtual =1;
-let ultimoMapa = seletorDeMapaAtual;
 let mapaAtual;
 function selecionarMapa(seletorDeMapaAtual){
     
@@ -30,11 +29,7 @@ function selecionarMapa(seletorDeMapaAtual){
         case 4:
             mapaAtual = mapas.Masmorra;
             break;
-        case 5:
-            mapaAtual = mapas.DeathScreen;
-            break;
     }
-    ultimoMapa = (seletorDeMapaAtual === 5) ? ultimoMapa : seletorDeMapaAtual;
 }
 
 
@@ -159,18 +154,19 @@ function esperar(ms) {
 function passarDeFase(){
     if(inimigos.length == 0){
                     alert("Passou De Fase");
-                    reiniciarJogo()
                     seletorDeMapaAtual++;
                     selecionarMapa(seletorDeMapaAtual);
+                    reiniciarJogo()
                 }
 }
-
+function trocarDemusica(escolhaMapa){
+    addMusic(escolhaMapa);
+}
 //Tela De Morte Player
 function desenharTelaDeMorte() {
     //passa parametros da tela de morte
-    selecionarMapa(5);
-    //addMusic(mapas.DeathScreen)
-    drawMap(ctx,mapaAtual,canvas);
+    abaixarVolume()
+    drawMap(ctx,mapas.DeathScreen,canvas);
     //addMusic(mapaAtual);
     ctx.fillStyle = "black";
     ctx.textAlign = "center";
@@ -233,12 +229,11 @@ function reiniciarJogo(){
         player.gameOver =false;
         player.life = 3;
         player.hudLife = 2.7;
-        player.position.x = 20;
-        player.position.y = 20;
+        player.position.x = 60;
+        player.position.y = canvas.height;
         inimigos.length = 0
-        selecionarMapa(ultimoMapa);
-        addMusic(mapaAtual);
-        //addMusic(mapaAtual);
+        selecionarMapa(mapaAtual);
+        trocarDemusica(mapaAtual)
         inimigos.push(new Inimigo(ctx,600,1));
         inimigos.push(new Inimigo(ctx,1000,1));
 }
@@ -299,5 +294,6 @@ document.addEventListener("keyup", ({code}) =>{
 // Quando o sprite carregar, inicia o loop
 player.sprite.onload = () => {
     addMusic(mapaAtual);
+    console.log("Trocou de musica")
     animate();
 };
