@@ -150,11 +150,20 @@ async function inimigoMorreu(inimigo,index){
                 console.log("deletou")
                 inimigos.splice(index,1)
                 inimigo.vivo = false;
+                passarDeFase()
             }
 function esperar(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function passarDeFase(){
+    if(inimigos.length == 0){
+                    alert("Passou De Fase");
+                    reiniciarJogo()
+                    seletorDeMapaAtual++;
+                    selecionarMapa(seletorDeMapaAtual);
+                }
+}
 
 //Tela De Morte Player
 function desenharTelaDeMorte() {
@@ -231,6 +240,7 @@ function reiniciarJogo(){
         addMusic(mapaAtual);
         //addMusic(mapaAtual);
         inimigos.push(new Inimigo(ctx,600,1));
+        inimigos.push(new Inimigo(ctx,1000,1));
 }
 
 document.addEventListener("keydown", ({code}) => {
