@@ -83,6 +83,7 @@ function animate() {
     if(player.gameOver){
         desenharTelaDeMorte();
     }
+    else{
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawMap(ctx,mapaAtual,canvas);
         
@@ -170,6 +171,7 @@ function animate() {
             }
         });
         passarDeFase();
+    }
 }
 
 //            ------------------    ACOES DO JOGADOR  E Principais Funcoes              --------------------
