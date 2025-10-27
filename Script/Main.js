@@ -62,6 +62,11 @@ const player = new Player(ctx,canvas);
 const inimigos = [];
 inimigos.push(new Inimigo(ctx,1000,1,false,true,0));
 inimigos.push(new Inimigo(ctx,600,1,false,true,0));
+=======
+inimigos.push(new Inimigo(ctx,1000,1));
+inimigos.push(new Inimigo(ctx,600,1));
+const boss = new Boss(ctx, canvas.width / 2, 100);
+>>>>>>> 3a4274cdddaf6908e6cdc9652697d4dbcf993114
 const balas = [];
 let canPress = true;
 let canAtirar = true;
