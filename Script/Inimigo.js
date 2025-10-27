@@ -118,24 +118,24 @@ class Inimigo {
                 player.helthAtual();
             }
 
-        // gravidade opciona
-        if (this.position.y < canvas.height - 120) {
-            this.velocity.y += this.gravidade;
-            this.position.y += this.velocity.y;
-        }
-        else {
-            this.velocity.y = 0;
-            this.position.y = canvas.height - 80;
-        }
-        this.draw();
-        //console.log(this.velocity.x+" velocidade x")
-        if (!(this.velocity.x == 0)) {
-            this.animateFrames();
-        }
+            // gravidade opciona
+            if (this.position.y < canvas.height - 120) {
+                this.velocity.y += this.gravidade;
+                this.position.y += this.velocity.y;
+            }
+            else {
+                this.velocity.y = 0;
+                this.position.y = canvas.height - 80;
+            }
+            this.draw();
+            //console.log(this.velocity.x+" velocidade x")
+            if (!(this.velocity.x == 0)) {
+                this.animateFrames();
+            }
 
+        }
     }
 }
-
 
 
 
