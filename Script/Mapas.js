@@ -22,11 +22,11 @@ export const mapas ={
         tilesetPath: "./Sprites/Bosses/BossGustavo/background/TilesetPraia.png",
         inimigosConfig: [
             { tipo: "Inimigo", x: 600, dir: 1 },
-            //{ tipo: "Inimigo2", x: 700, dir: 1 },
+            { tipo: "Inimigo2", x: 700, dir: 1 },
             //{ tipo: "Inimigo", x: 800, dir: 1 },
-            //{ tipo: "Inimigo", x: 1000, dir: 1 },
+            { tipo: "Inimigo", x: 1000, dir: 1 },
             //{ tipo: "Inimigo", x: -600, dir: 1 },
-            //{ tipo: "Inimigo2", x: 1350, dir: 1 }
+            { tipo: "Inimigo2", x: 1550, dir: 1 }
         ]
     },
 
@@ -36,6 +36,7 @@ export const mapas ={
         musicPath: "./Audio/Mapas/BossAlan/audio_alan.mpeg",
         inimigosConfig: [
             { tipo: "Inimigo", x: 600, dir: 1 },
+            
         ]
     },
 
@@ -49,6 +50,12 @@ export const mapas ={
         tilesetPath: "./Sprites/Bosses/BossGustavo/background/TilesetPraia.png",
         inimigosConfig: [
             { tipo: "Inimigo", x: 600, dir: 1 },
+            { tipo: "Inimigo", x: 600, dir: 1 },
+            { tipo: "Inimigo2", x: 700, dir: 1 },
+            //{ tipo: "Inimigo", x: 800, dir: 1 },
+            { tipo: "Inimigo", x: 1000, dir: 1 },
+            //{ tipo: "Inimigo", x: -600, dir: 1 },
+            { tipo: "Inimigo2", x: 1550, dir: 1 }
         ]
     },
 
