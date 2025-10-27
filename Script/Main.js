@@ -60,6 +60,7 @@ const player = new Player(ctx,canvas);
 const inimigos = [];
 inimigos.push(new Inimigo(ctx,1000,1));
 inimigos.push(new Inimigo(ctx,600,1));
+const boss = new Boss(ctx, canvas.width / 2, 100);
 const balas = [];
 let canPress = true;
 let canAtirar = true;
@@ -149,8 +150,12 @@ function animate() {
         }
         });
         
+        // atualiza o Boss
+        if (boss.vivo) {
+            boss.update(player.position.y, player.position.x);
+        }
 
-        // Atualiza e desenha balas
+        // atualiza e desenha balas
         balas.forEach((bala, index) => {
             let removeBala = false;
             bala.update();
@@ -159,6 +164,7 @@ function animate() {
             }
 
             
+            // colisão com inimigos
             inimigos.forEach((inimigo, indexInimigo) => {
                 console.log(inimigo.verificaColisao(bala));
                 if (inimigo.vivo && inimigo.verificaColisao(bala)) {
@@ -166,6 +172,13 @@ function animate() {
                     removeBala = true;
                     }
             });
+            
+            // colisão com boss
+            if (boss.vivo && boss.verificaColisao(bala)) {
+                boss.recebeDano(10);
+                removeBala = true;
+            }
+            
             if(removeBala){
                 balas.splice(index, 1);
             }
@@ -174,7 +187,7 @@ function animate() {
     }
 }
 
-//            ------------------    ACOES DO JOGADOR  E Principais Funcoes              --------------------
+// ações do jogador e principais funções
 
 async function inimigoMorreu(inimigo,index){
                 inimigo.morreu();
