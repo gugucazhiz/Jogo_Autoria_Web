@@ -76,7 +76,7 @@ class Inimigo{
         );
     }
 
-    update(Playery, Playerx, player) {
+    update(Playery, Playerx, player,inimigos) {
         const distanciaMinima = 1; // distância mínima do player
 
         // diferença entre as posições
@@ -111,6 +111,7 @@ class Inimigo{
             const dentroX = Math.abs(this.position.x - Playerx) < hitboxX / 2;
             const dentroY = Math.abs(this.position.y - Playery) < hitboxY;
             //console.log(dentroX+" "+dentroY);
+            //tira vida do player caso atinja
             if ((dentroX && dentroY) && this.morrendo === false) {
                 //console.log("passou");
                 this.velocity.x = 5;
@@ -127,6 +128,12 @@ class Inimigo{
                 this.velocity.y = 0;
                 this.position.y = canvas.height - 80;
             }
+
+
+            //evitar sobreposicao de inimigos
+
+            this.evitarSobreposicao(inimigos);
+
             this.draw();
             //console.log(this.velocity.x+" velocidade x")
             if (!(this.velocity.x == 0)) {
@@ -135,6 +142,35 @@ class Inimigo{
 
         }
     }
+    evitarSobreposicao(inimigos) {
+        const hitboxReducao = 25; // reduz 25px de cada lado
+    inimigos.forEach(outro => {
+        if (outro === this) return; // ignora a si mesmo
+        const colidiuX = this.position.x + hitboxReducao < outro.position.x + outro.largura - hitboxReducao &&
+                 this.position.x + this.largura - hitboxReducao > outro.position.x + hitboxReducao;
+
+        const colidiuY = this.position.y + hitboxReducao < outro.position.y + outro.altura - hitboxReducao &&
+                 this.position.y + this.altura - hitboxReducao > outro.position.y + hitboxReducao;
+
+
+        //debug para testar do tamanho do collider
+        /*
+        this.ctx.fillRect(
+        this.position.x + hitboxReducao / 2, 
+        this.position.y + hitboxReducao / 2, 
+        this.largura - hitboxReducao, 
+        this.altura - hitboxReducao
+        );
+        */
+        if (colidiuX && colidiuY) {
+            // empurra os inimigos levemente para os lados opostos
+            const sobreposicaoX = (this.largura - Math.abs(this.position.x - outro.position.x)) / 2;
+            const direcaoEmpurrao = (this.position.x < outro.position.x) ? -1 : 1;
+            this.position.x += direcaoEmpurrao * sobreposicaoX *0.01;
+        }
+    });
+}
+
 }
 
 

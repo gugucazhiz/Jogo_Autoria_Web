@@ -148,10 +148,11 @@ function animate() {
         inimigos.forEach(async(inimigo, index) => {
             if (inimigo.life > 2 && !inimigo.morrendo) {
             inimigo.morrendo = true; // impede chamar de novo
-            inimigo.vivo =false;
+            
             await inimigoMorreu(inimigo, index);
+            inimigo.vivo =false;
         } else if (inimigo.vivo){
-            inimigo.update(player.position.y, player.position.x,player);
+            inimigo.update(player.position.y, player.position.x,player,inimigos);
         }
         });
 
@@ -181,7 +182,7 @@ function animate() {
                 boss.recebeDano(10);
                 removeBala = true;
             }
-            
+
             if(removeBala){
                 balas.splice(index, 1);
             }
