@@ -2,7 +2,7 @@
 
 
 class Inimigo{
-    constructor(ctx,positionx,positiony){
+    constructor(ctx,positionx,positiony,morrendo,vivo,life){
         this.position = {
             x: positionx,
             y: positiony
@@ -21,9 +21,9 @@ class Inimigo{
         this.spriteRun = new Image();
         this.spriteRun.src = "Sprites/Inimigos/Mushroom/Mushroom without VFX/Mushroom-Run.png";
         //
-        this.morrendo = false;
-        this.vivo = true;
-        this.life = 0;
+        this.morrendo = morrendo; //false;
+        this.vivo = vivo; //true;
+        this.life = life; //0;
         this.altura =60;
         this.largura =100;
         this.estado = 0.4;       //cordenada X do spritesheet

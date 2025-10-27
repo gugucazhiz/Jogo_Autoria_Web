@@ -33,7 +33,10 @@ export const mapas ={
         nome: "Parque guaxinildo",
         background: "./Sprites/Bosses/BossDavi/background/backgoundEstatico.png",
         musicPath: "./Audio/Mapas/BossDavi/audio_davi.mpeg",
-        matriz:[]
+        width: tileSetPraia.layers[0].width,
+        height: tileSetPraia.layers[0].height,
+        matriz: tileSetPraia.layers[0].data,
+        tilesetPath: "./Sprites/Bosses/BossGustavo/background/TilesetPraia.png"
     },
 
     Ceu:{

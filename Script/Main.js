@@ -56,10 +56,12 @@ animate(); // quando o mapa carregar, inicia
 
 
 // ----------------------------- VARIAVEIS Principais
+let podePassardefase = true;
+let transicaoEmAndamento = false;
 const player = new Player(ctx,canvas);
 const inimigos = [];
-inimigos.push(new Inimigo(ctx,1000,1));
-inimigos.push(new Inimigo(ctx,600,1));
+inimigos.push(new Inimigo(ctx,1000,1,false,true,0));
+inimigos.push(new Inimigo(ctx,600,1,false,true,0));
 const balas = [];
 let canPress = true;
 let canAtirar = true;
@@ -84,7 +86,6 @@ function animate() {
         desenharTelaDeMorte();
     }
     else{
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawMap(ctx,mapaAtual,canvas);
         
         //ctx.drawImage(background, 0, 0);
@@ -120,6 +121,8 @@ function animate() {
         // Atualiza e desenha o player
         
         player.update();
+
+        //Plataformas colisao
         player.noChao = false
         plataformas.forEach(plataforma => {
         const p = player;
@@ -135,6 +138,7 @@ function animate() {
                 p.position.y = plataforma.y - (p.altura - 160);
                 p.velocity.y = 0;
                 p.noChao = true;
+                //console.log("player acao :"+p.acao)
             }
         }
         });
@@ -143,12 +147,14 @@ function animate() {
         inimigos.forEach(async(inimigo, index) => {
             if (inimigo.life > 2 && !inimigo.morrendo) {
             inimigo.morrendo = true; // impede chamar de novo
+            inimigo.vivo =false;
             await inimigoMorreu(inimigo, index);
         } else if (inimigo.vivo){
             inimigo.update(player.position.y, player.position.x,player);
         }
         });
         
+
 
         // Atualiza e desenha balas
         balas.forEach((bala, index) => {
@@ -170,6 +176,7 @@ function animate() {
                 balas.splice(index, 1);
             }
         });
+        
         passarDeFase();
     }
 }
@@ -179,6 +186,7 @@ function animate() {
 async function inimigoMorreu(inimigo,index){
                 inimigo.morreu();
                 await esperar(900);
+                if(transicaoEmAndamento){return}
                 console.log("deletou")
                 inimigos.splice(index,1)
                 inimigo.vivo = false;
@@ -187,13 +195,21 @@ function esperar(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function passarDeFase(){
-    if(inimigos.length == 0){
-                    alert("Passou De Fase");
-                    seletorDeMapaAtual++;
-                    selecionarMapa(seletorDeMapaAtual);
-                    reiniciarJogo()
-                }
+async function passarDeFase(){
+        const podePassardefase = inimigos.some(inimigo => inimigo.vivo);
+
+        if(!podePassardefase){
+            transicaoEmAndamento=true;
+            console.log(inimigos.length+" inimigos")
+            alert("Passou De Fase");
+            seletorDeMapaAtual++;
+            selecionarMapa(seletorDeMapaAtual);
+            trocarDemusica(mapaAtual)
+            reiniciarJogo()
+            await esperar(900);
+            transicaoEmAndamento=false;
+        }
+            
 }
 function trocarDemusica(escolhaMapa){
     addMusic(escolhaMapa);
@@ -267,11 +283,13 @@ function reiniciarJogo(){
         player.hudLife = 2.7;
         player.position.x = 70;
         player.position.y = canvas.height;
-        inimigos.length = 0
-        selecionarMapa(mapaAtual);
-        trocarDemusica(mapaAtual)
-        inimigos.push(new Inimigo(ctx,600,1));
-        inimigos.push(new Inimigo(ctx,1000,1));
+
+        inimigos.splice(0, inimigos.length);
+
+        inimigos.push(new Inimigo(ctx,600,1,false,true,0));  //morrendo,vivo,life
+        inimigos.push(new Inimigo(ctx,1000,1,false,true,0));
+
+        console.log(inimigos)
 }
 
 document.addEventListener("keydown", ({code}) => {

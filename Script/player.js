@@ -35,6 +35,7 @@ class Player{
         this.hudLife =2.7;
         //Controle Framess
         this.noChao = false;
+        this.emcimaPlataforma=false
         this.altura =210;
         this.largura =210;
         this.estado = 0;       //cordenada X do spritesheet
@@ -100,39 +101,34 @@ class Player{
                 this.velocity.y += gravidade;
             }
             this.position.y += this.velocity.y;
-
             this.noChao = false;
 
             //chao principal
-            if (this.position.y > canvas.height - 110) {
+        if (this.position.y > canvas.height - 110) {
                 this.position.y = canvas.height - 110;
                 this.velocity.y = 0;
                 this.noChao = true;
+        }
 
-                //animacao do pulo
-                if (this.velocity.y > 0) {
-                    this.acao = "pulando";
-                    this.estado = 4;
-                    this.maximoframes = 5;
+        if (this.velocity.y > 1) {
+                console.log("velo "+this.velocity.y)
+                console.log("esta pulando")
+                this.acao = "pulando";
+                this.estado = 4;
+                this.maximoframes = 5;
+        }
+        else{
+            //this.velocity.y = 0;
+            //this.position.y = canvas.height -110;
+            if(this.acao === "pulando"){
+                if(this.velocity.x !== 0) {
+                    this.acao = (this.acao_anterior === 0)? "esquerda" : "direita";
                 }
-                
                 else{
-                this.velocity.y = 0;
-                this.position.y = canvas.height -110;
-                if(this.acao === "pulando"){
-                    if(this.velocity.x !== 0) {
-                        this.acao = (this.acao_anterior === 0)? "esquerda" : "direita";
-                    }
-                    else{
-                        this.acao = "parado";
+                    this.acao = "parado";
                         
-                    }
-
                 }
             }
-
-            
-
         }
 
         //velocidade normal = this.velocity.x
@@ -174,12 +170,6 @@ class Player{
             }
             this.frameContador=0;
     }
-    }
-    pular(){
-        if(this.position.y >= canvas.height -110){
-            this.velocity.y =-10;
-            this.acao = "pulando";
-        }
     }
     pararPlayer(){
             this.acao = "parado";
