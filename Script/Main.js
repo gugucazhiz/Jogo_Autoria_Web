@@ -146,7 +146,6 @@ function animate() {
         } else if (inimigo.vivo){
             inimigo.update(player.position.y, player.position.x,player);
         }
-        passarDeFase()
         });
         
 
@@ -170,6 +169,7 @@ function animate() {
                 balas.splice(index, 1);
             }
         });
+        passarDeFase();
 }
 
 //            ------------------    ACOES DO JOGADOR  E Principais Funcoes              --------------------
