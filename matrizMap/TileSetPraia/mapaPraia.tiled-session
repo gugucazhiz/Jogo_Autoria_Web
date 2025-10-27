@@ -1,0 +1,88 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "tileSetPraia.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "file.lastUsedOpenFilter": "Todos os Ficheiros (*)",
+    "fileStates": {
+        ":/automap-tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "TilesetPraia.tsx": {
+            "scaleInDock": 0.25,
+            "scaleInEditor": 1
+        },
+        "back.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "chao.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 0.5
+        },
+        "mapa4.tmj": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 618,
+                "y": 758
+            }
+        },
+        "mapa4.tmj#mapa": {
+            "scaleInDock": 1
+        },
+        "mapa4.tmj#mapas": {
+            "scaleInDock": 1
+        },
+        "plataformaAlan.tsx": {
+            "scaleInDock": 0.33,
+            "scaleInEditor": 0.5
+        },
+        "tileSetPraia.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 719,
+                "y": 322
+            }
+        },
+        "tileSetPraia.tsx": {
+            "scaleInDock": 0.33,
+            "scaleInEditor": 1
+        },
+        "tileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "D:/Projetos_git/Jogo_Autoria_Web/matrizMap",
+    "last.externalTilesetPath": "D:/Projetos_git/Jogo_Autoria_Web/Sprites/Bosses/Bossgustavo/background",
+    "last.imagePath": "D:/Projetos_git/Jogo_Autoria_Web/Sprites/Bosses/Bossgustavo/background",
+    "map.height": 24,
+    "map.lastUsedExportFilter": "Arquivos de mapa JSON (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.width": 42,
+    "openFiles": [
+        "tileSetPraia.tmx",
+        "TilesetPraia.tsx"
+    ],
+    "project": "mapaPraia.tiled-project",
+    "recentFiles": [
+        "TilesetPraia.tsx",
+        "tileSetPraia.tmx",
+        "tileset.tsx",
+        "tileSetPraia.tsx",
+        "plataformaAlan.tsx",
+        "chao.tsx",
+        "back.tsx",
+        "mapa4.tmj"
+    ],
+    "tileset.lastUsedFilter": "Todos os Ficheiros (*)",
+    "tileset.lastUsedFormat": "tsx"
+}
