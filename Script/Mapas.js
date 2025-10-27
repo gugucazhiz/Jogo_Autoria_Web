@@ -19,14 +19,24 @@ export const mapas ={
         width: tileSetPraia.layers[0].width,
         height: tileSetPraia.layers[0].height,
         matriz: tileSetPraia.layers[0].data,
-        tilesetPath: "./Sprites/Bosses/BossGustavo/background/TilesetPraia.png"
+        tilesetPath: "./Sprites/Bosses/BossGustavo/background/TilesetPraia.png",
+        inimigosConfig: [
+            { tipo: "Inimigo", x: 600, dir: 1 },
+            //{ tipo: "Inimigo2", x: 700, dir: 1 },
+            //{ tipo: "Inimigo", x: 800, dir: 1 },
+            //{ tipo: "Inimigo", x: 1000, dir: 1 },
+            //{ tipo: "Inimigo", x: -600, dir: 1 },
+            //{ tipo: "Inimigo2", x: 1350, dir: 1 }
+        ]
     },
 
     Masmorra:{
         nome : "Covil locado",
         background :  "./Sprites/Bosses/BossAlan/background/backgoroundEstatico.png",
         musicPath: "./Audio/Mapas/BossAlan/audio_alan.mpeg",
-        matriz:[]
+        inimigosConfig: [
+            { tipo: "Inimigo", x: 600, dir: 1 },
+        ]
     },
 
     Pista:{
@@ -36,14 +46,19 @@ export const mapas ={
         width: tileSetPraia.layers[0].width,
         height: tileSetPraia.layers[0].height,
         matriz: tileSetPraia.layers[0].data,
-        tilesetPath: "./Sprites/Bosses/BossGustavo/background/TilesetPraia.png"
+        tilesetPath: "./Sprites/Bosses/BossGustavo/background/TilesetPraia.png",
+        inimigosConfig: [
+            { tipo: "Inimigo", x: 600, dir: 1 },
+        ]
     },
 
     Ceu:{
         nome: "zona de cochilo",
         background: "./Sprites/Bosses/BossNayan/background/backgorundEstatico.png",
         musicPath: "./Audio/Mapas/BossNayan/audio_nayan.mpeg",
-        matriz:[]
+        inimigosConfig: [
+            { tipo: "Inimigo", x: 600, dir: 1 },
+        ]
     },
 
     DeathScreen:{

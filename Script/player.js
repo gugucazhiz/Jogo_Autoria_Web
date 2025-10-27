@@ -111,8 +111,8 @@ class Player{
         }
 
         if (this.velocity.y > 1) {
-                console.log("velo "+this.velocity.y)
-                console.log("esta pulando")
+                //console.log("velo "+this.velocity.y)
+                //console.log("esta pulando")
                 this.acao = "pulando";
                 this.estado = 4;
                 this.maximoframes = 5;
@@ -177,8 +177,8 @@ class Player{
             }
 
 
-    helthAtual(){
-        this.life--;
+    helthAtual(vidaAserTirada){
+        this.life = this.life - vidaAserTirada;
         //2.7 full Life //1.8  2/3 life // 0.9 1/3 life // 0.1 = 0 life
         switch(this.life){
             case 3:
@@ -194,6 +194,9 @@ class Player{
                 this.hudLife = 0
                 this.gameOver = true;
                 break;
+            default:
+                this.hudlife = 0;
+                this.gameOver = true;
         }
     }
 }
