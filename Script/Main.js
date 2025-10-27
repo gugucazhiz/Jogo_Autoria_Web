@@ -8,13 +8,14 @@ canvas.height = innerHeight;
 
 //-------------------------SELETOR DE MAPAS E MUSCAS
 
-import { drawMap,mapas} from "./Mapas.js";
-import { playTiro,addMusic} from "./SonsEMusicas.js";
+import { drawMap,mapas,gerarPlataformas} from "./Mapas.js";
+import { playTiro,addMusic,abaixarVolume} from "./SonsEMusicas.js";
 
 
 let seletorDeMapaAtual =1;
-let ultimoMapa = seletorDeMapaAtual;
 let mapaAtual;
+let plataformas = [];
+
 function selecionarMapa(seletorDeMapaAtual){
     
     switch(seletorDeMapaAtual){
@@ -30,10 +31,9 @@ function selecionarMapa(seletorDeMapaAtual){
         case 4:
             mapaAtual = mapas.Masmorra;
             break;
-        case 5:
-            mapaAtual = mapas.DeathScreen;
-            break;
     }
+    plataformas = gerarPlataformas(mapaAtual,32)
+    console.log("Plataformas geradas:", plataformas.length);
 }
 
 
@@ -70,6 +70,7 @@ let keys={
 let acao_anterior =0;
 let verifica_estado=true;
 selecionarMapa(seletorDeMapaAtual);
+
 // ----------------------------- VARIAVEIS Principais
 
 
@@ -78,12 +79,25 @@ function animate() {
     //ctx.clearRect(0, 0, canvas.width, canvas.height);
     // 
     requestAnimationFrame(animate);
+    
     if(player.gameOver){
         desenharTelaDeMorte();
     }
     else{
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawMap(ctx,mapaAtual,canvas);
+        
         //ctx.drawImage(background, 0, 0);
-        drawMap(ctx,mapaAtual,canvas);
+        
+
+        //pintar plataformas para debugg
+        /*
+         plataformas.forEach(p => {
+        ctx.fillStyle = "rgba(0, 255, 0, 0.3)";
+        ctx.fillRect(p.x, p.y, p.w, p.h);
+        });
+        */
+
         if(keys.left){
             //if para limitar velocidade maxima
             if(player.velocity.x > -5){
@@ -104,9 +118,28 @@ function animate() {
         
         
         // Atualiza e desenha o player
+        
         player.update();
-        player.draw();
+        player.noChao = false
+        plataformas.forEach(plataforma => {
+        const p = player;
+        const colisaoX = p.position.x + (p.largura - 170) > plataforma.x &&
+                         p.position.x < plataforma.x + plataforma.w;
 
+        const colisaoY = p.position.y + (p.altura-140) > plataforma.y &&
+                         p.position.y < plataforma.y + plataforma.h;
+
+        if (colisaoX && colisaoY) {
+            // colisão vinda de cima
+            if (p.velocity.y > 0 && p.position.y + (p.altura - 160) - p.velocity.y <= plataforma.y) {
+                p.position.y = plataforma.y - (p.altura - 160);
+                p.velocity.y = 0;
+                p.noChao = true;
+            }
+        }
+        });
+        player.draw();
+        
         inimigos.forEach(async(inimigo, index) => {
             if (inimigo.life > 2 && !inimigo.morrendo) {
             inimigo.morrendo = true; // impede chamar de novo
@@ -133,11 +166,11 @@ function animate() {
                     removeBala = true;
                     }
             });
-
             if(removeBala){
                 balas.splice(index, 1);
             }
         });
+        passarDeFase();
     }
 }
 
@@ -153,11 +186,23 @@ async function inimigoMorreu(inimigo,index){
 function esperar(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+function passarDeFase(){
+    if(inimigos.length == 0){
+                    alert("Passou De Fase");
+                    seletorDeMapaAtual++;
+                    selecionarMapa(seletorDeMapaAtual);
+                    reiniciarJogo()
+                }
+}
+function trocarDemusica(escolhaMapa){
+    addMusic(escolhaMapa);
+}
 //Tela De Morte Player
 function desenharTelaDeMorte() {
     //passa parametros da tela de morte
-    selecionarMapa(5);
-    drawMap(ctx,mapaAtual,canvas);
+    abaixarVolume()
+    drawMap(ctx,mapas.DeathScreen,canvas);
     //addMusic(mapaAtual);
     ctx.fillStyle = "black";
     ctx.textAlign = "center";
@@ -212,7 +257,7 @@ function click_e_enter_tiro(){
                 player.pararPlayer();
             }
         },200);
-        setTimeout(tiro,800);
+        setTimeout(tiro,700);
     }
 }
 
@@ -220,21 +265,22 @@ function reiniciarJogo(){
         player.gameOver =false;
         player.life = 3;
         player.hudLife = 2.7;
-        player.position.x = 20;
-        player.position.y = 20;
+        player.position.x = 70;
+        player.position.y = canvas.height;
         inimigos.length = 0
-        selecionarMapa(ultimoMapa);
-        //addMusic(mapaAtual);
+        selecionarMapa(mapaAtual);
+        trocarDemusica(mapaAtual)
         inimigos.push(new Inimigo(ctx,600,1));
+        inimigos.push(new Inimigo(ctx,1000,1));
 }
 
 document.addEventListener("keydown", ({code}) => {
     if ((code === "Space" || code ==="KeyW") && canPress == true ){
         canPress =false;
         //Mexa aqui para mudar altura e velocidade do pulo
-        player.position.y -= 20;
-        player.velocity.y = -10;
-        setTimeout(doAction,500);
+        player.position.y -= 30;
+        player.velocity.y = -20;
+        setTimeout(doAction,700);
         
     }
     if (code === "KeyD"){
@@ -284,5 +330,6 @@ document.addEventListener("keyup", ({code}) =>{
 // Quando o sprite carregar, inicia o loop
 player.sprite.onload = () => {
     addMusic(mapaAtual);
+    console.log("Trocou de musica")
     animate();
 };

@@ -118,8 +118,6 @@ class Inimigo {
                 player.helthAtual();
             }
 
-        }
-
         // gravidade opciona
         if (this.position.y < canvas.height - 120) {
             this.velocity.y += this.gravidade;

@@ -5,8 +5,9 @@ class Player{
     constructor(ctx,canvas){
         this.ctx =ctx;
         this.position = {
-            x : 20,
+            x : 190,
             y : 20,
+            //canvas.height
         }
         this.positionVida = {
             //mexa somente no numero fora dos parenteses
@@ -33,6 +34,7 @@ class Player{
         this.life =3;
         this.hudLife =2.7;
         //Controle Framess
+        this.noChao = false;
         this.altura =210;
         this.largura =210;
         this.estado = 0;       //cordenada X do spritesheet
@@ -92,31 +94,47 @@ class Player{
         
     }
     update(){
-        if(this.position.y < canvas.height-110){
-            this.velocity.y += gravidade;
+
+        //posicao vertical
+            if (!this.noChao) {
+                this.velocity.y += gravidade;
+            }
             this.position.y += this.velocity.y;
 
-            if(this.velocity.y > 0){
-                this.acao = "pulando";
-                this.estado = 4;
-                this.maximoframes =5;
-            }
-        }
-        else{
-            this.velocity.y = 0;
-            this.position.y = canvas.height -110;
-            if(this.acao === "pulando"){
-                if(this.velocity.x !== 0) {
-                    this.acao = (this.acao_anterior === 0)? "esquerda" : "direita";
+            this.noChao = false;
+
+            //chao principal
+            if (this.position.y > canvas.height - 110) {
+                this.position.y = canvas.height - 110;
+                this.velocity.y = 0;
+                this.noChao = true;
+
+                //animacao do pulo
+                if (this.velocity.y > 0) {
+                    this.acao = "pulando";
+                    this.estado = 4;
+                    this.maximoframes = 5;
                 }
+                
                 else{
-                    this.acao = "parado";
-                    
-                }
+                this.velocity.y = 0;
+                this.position.y = canvas.height -110;
+                if(this.acao === "pulando"){
+                    if(this.velocity.x !== 0) {
+                        this.acao = (this.acao_anterior === 0)? "esquerda" : "direita";
+                    }
+                    else{
+                        this.acao = "parado";
+                        
+                    }
 
+                }
             }
 
+            
+
         }
+
         //velocidade normal = this.velocity.x
         //para testar frames = 0.1
         this.position.x += this.velocity.x;

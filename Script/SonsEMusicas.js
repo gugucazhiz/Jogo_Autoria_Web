@@ -1,29 +1,36 @@
 import {mapas} from "./Mapas.js";
 
-const musics = [];
-let index =0;
+let musica = new Audio()
+
+
 export function playTiro(){
             const tiro = new Audio("./Audio/Player/tiro_Sound.mpeg");
             tiro.volume = 0.3;
             tiro.play();
         }
 
-export function addMusic(musicaAtual){
-
-    //verificar se ja tem musica tocando
-    musics.push(new Audio(musicaAtual.musicPath))
-    musics[index].loop = true;
+function alterarVolume(musicaAtual){
     if(musicaAtual === mapas.Praia || musicaAtual === mapas.Masmorra){
-        musics[index].volume = 0.07;
+        musica.volume = 0.07;
     }
     else{
-        musics[index].volume = 0.08;
-    }
-    ;
-    console.log(musicaAtual.musicPath);
+        musica.volume = 0.08;
+    };
+}
+
+export function abaixarVolume(musicaAtual){
+    musica.volume =0;
+}
+
+export function addMusic(musicaAtual){
+    musica.src = (musicaAtual.musicPath)
+    
+    console.log(musica.src);
+    musica.loop= true;
+    
 
     const iniciarMusica = () => {
-        musics[musics.length - 1].play()
+        musica.play()
             .then(() => {
                 console.log("musica played");
             })
@@ -37,5 +44,8 @@ export function addMusic(musicaAtual){
     document.addEventListener("click", iniciarMusica);
     document.addEventListener("keydown", iniciarMusica);
 
-    index ++;
+
+    alterarVolume(musicaAtual);
+    
 }
+
