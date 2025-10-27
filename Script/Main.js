@@ -12,7 +12,7 @@ import { drawMap,mapas,gerarPlataformas} from "./Mapas.js";
 import { playTiro,addMusic,abaixarVolume} from "./SonsEMusicas.js";
 
 
-let seletorDeMapaAtual =4;
+let seletorDeMapaAtual =1;
 let mapaAtual;
 let plataformas = [];
 
@@ -147,8 +147,15 @@ function animate() {
                 p.noChao = true;
                 //console.log("player acao :"+p.acao)
             }
+            //colisao vinda de baixo
+            else if (p.velocity.y < 0 && p.position.y >= plataforma.y + plataforma.h - 7) {
+
+            p.position.y = plataforma.y + plataforma.h;
+            p.velocity.y = 0;
         }
+    }
         });
+        
         player.draw();
         
         inimigos.forEach(async(inimigo, index) => {
