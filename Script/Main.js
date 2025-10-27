@@ -62,11 +62,7 @@ const player = new Player(ctx,canvas);
 const inimigos = [];
 inimigos.push(new Inimigo(ctx,1000,1,false,true,0));
 inimigos.push(new Inimigo(ctx,600,1,false,true,0));
-=======
-inimigos.push(new Inimigo(ctx,1000,1));
-inimigos.push(new Inimigo(ctx,600,1));
 const boss = new Boss(ctx, canvas.width / 2, 100);
->>>>>>> 3a4274cdddaf6908e6cdc9652697d4dbcf993114
 const balas = [];
 let canPress = true;
 let canAtirar = true;
@@ -126,9 +122,9 @@ function animate() {
         // Atualiza e desenha o player
         
         player.update();
-
+        
         //Plataformas colisao
-        player.noChao = false
+        //player.noChao = false
         plataformas.forEach(plataforma => {
         const p = player;
         const colisaoX = p.position.x + (p.largura - 170) > plataforma.x &&
@@ -158,7 +154,10 @@ function animate() {
             inimigo.update(player.position.y, player.position.x,player);
         }
         });
-        
+
+        if (boss.vivo) {
+            boss.update(player.position.y, player.position.x);
+        }
 
 
         // Atualiza e desenha balas
@@ -177,6 +176,12 @@ function animate() {
                     removeBala = true;
                     }
             });
+
+            if (boss.vivo && boss.verificaColisao(bala)) {
+                boss.recebeDano(10);
+                removeBala = true;
+            }
+            
             if(removeBala){
                 balas.splice(index, 1);
             }
@@ -293,6 +298,7 @@ function reiniciarJogo(){
 
         inimigos.push(new Inimigo(ctx,600,1,false,true,0));  //morrendo,vivo,life
         inimigos.push(new Inimigo(ctx,1000,1,false,true,0));
+        boss = new Boss(ctx, canvas.width / 2, 100);
 
         console.log(inimigos)
 }
