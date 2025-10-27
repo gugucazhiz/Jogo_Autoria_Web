@@ -12,7 +12,7 @@ import { drawMap,mapas,gerarPlataformas} from "./Mapas.js";
 import { playTiro,addMusic,abaixarVolume} from "./SonsEMusicas.js";
 
 
-let seletorDeMapaAtual =1;
+let seletorDeMapaAtual = 1;
 let mapaAtual;
 let plataformas = [];
 
