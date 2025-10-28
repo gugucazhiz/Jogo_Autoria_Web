@@ -27,7 +27,7 @@ class Player{
         }
         //So,m
         this.audioDano = new Audio("./Audio/Player/PlayerTakingDamage.mp3")
-        this.audioDano.volume = 0.03
+        this.audioDano.volume = 0.025
         //Imagens
         this.sprite = new Image();
         this.sprite.src = "Sprites/Player/personagem_correndo.png"

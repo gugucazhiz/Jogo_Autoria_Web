@@ -17,7 +17,7 @@ class Inimigo{
         }
         //som
         this.audioDanoMushRoom = new Audio("./Audio/Enemys/Mushroom/mushrromSoundDying.mp3")
-        this.audioDanoMushRoom.volume = 0.17;
+        this.audioDanoMushRoom.volume = 0.1;
         //gravidade
         this.gravidade = 1;
         //imagem
