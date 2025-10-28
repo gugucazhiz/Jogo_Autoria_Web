@@ -15,12 +15,17 @@ class Inimigo{
             x: 3,
             y: 1,
         }
+        //som
+        this.audioDanoMushRoom = new Audio("./Audio/Enemys/Mushroom/mushrromSoundDying.mp3")
+        this.audioDanoMushRoom.volume = 0.17;
+        //gravidade
         this.gravidade = 1;
-        this.escala = 1.5; // tamanho do inimigo na tela
+        //imagem
         this.ctx = ctx;
         this.spriteRun = new Image();
         this.spriteRun.src = "Sprites/Inimigos/Mushroom/Mushroom without VFX/Mushroom-Run.png";
-        //
+        //tamanho
+        this.escala = 1.5; // tamanho do inimigo na tela
         this.morrendo = morrendo; //false;
         this.vivo = vivo; //true;
         this.life = life; //0;
@@ -29,6 +34,7 @@ class Inimigo{
         this.largura =100;
         this.estado = 0.4;       //cordenada X do spritesheet
         this.direcao = 3;   //1 esquerda || 3 direita  || 5 morrendo esquerda || 7 morrendo direita
+        //controle de frames na tela
         this.maximoframes = 12;  //quantidade de frames a serem usados da spritesheet
         this.frameContador = 0;  //index i do if de animateFrames
         this.frameDelay = 10;   //Fps
@@ -61,11 +67,12 @@ class Inimigo{
         return
     }
     morreu() {
+        this.audioDanoMushRoom.play();
         this.morrendo = true;
         this.acao_anterior = (this.acao_anterior === 3) ? 7 : 5;
         this.maximoframes = 11.4
         console.log(this.acao_anterior + " 5 ou 7")
-        this.animateFrames();
+        this.animateFrames(); 
     }
 
     verificaColisao(bala) {
@@ -189,12 +196,19 @@ class Inimigo2{
             x: 3,
             y: 1,
         }
+
+        //som
+        this.audioDanoFire = new Audio("./Audio/Enemys/Fire/FireSoundDying.mp3")
+        this.audioDanoFire.volume = 0.7;
+        //gravid
         this.gravidade = 1;
-        this.escala = 1.5; // tamanho do inimigo na tela
+        //imagem
         this.ctx = ctx;
         this.spriteFire = new Image();
         this.spriteFire.src = "Sprites/Inimigos/Fire/fireSmoke.png";
-        //
+        
+        //tamanho
+        this.escala = 1.5; // tamanho do inimigo na tela
         this.morrendo = morrendo; //false;
         this.vivo = vivo; //true;
         this.life = life; //0;
@@ -202,6 +216,8 @@ class Inimigo2{
         this.largura =105;
         this.estado = 0;       //cordenada X do spritesheet
         this.direcao = 0.4;   //0.4 linha fogo //2 linha fumaca
+
+        //controle de frames
         this.maximoframes =6;  //quantidade de frames a serem usados da spritesheet
         this.frameContador = 0;  //index i do if de animateFrames
         this.frameDelay = 13;   //Fps
@@ -246,6 +262,7 @@ class Inimigo2{
         this.direcao = 2;
         this.frameDelay = 12;
         this.animateFrames();
+        this.audioDanoFire.play();
     }
 
     verificaColisao(bala) {

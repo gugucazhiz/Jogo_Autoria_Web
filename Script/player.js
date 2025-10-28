@@ -25,6 +25,10 @@ class Player{
             x : 0,
             y : 0
         }
+        //So,m
+        this.audioDano = new Audio("./Audio/Player/PlayerTakingDamage.mp3")
+        this.audioDano.volume = 0.03
+        //Imagens
         this.sprite = new Image();
         this.sprite.src = "Sprites/Player/personagem_correndo.png"
         this.spriteVida = new Image();
@@ -178,6 +182,7 @@ class Player{
 
 
     helthAtual(vidaAserTirada){
+        this.audioDano.play();
         this.life = this.life - vidaAserTirada;
         //2.7 full Life //1.8  2/3 life // 0.9 1/3 life // 0.1 = 0 life
         switch(this.life){
