@@ -205,7 +205,7 @@ class Inimigo2{
         this.maximoframes =6;  //quantidade de frames a serem usados da spritesheet
         this.frameContador = 0;  //index i do if de animateFrames
         this.frameDelay = 13;   //Fps
-        this.acao_anterior = 0; //ultima direção olhada
+        this.acao_anterior = 0; //ultima direção olhadaa
     }
 
     draw() {
