@@ -52,6 +52,13 @@ animate(); // quando o mapa carregar, inicia
 
 */
 
+function carregarInimigosDoMapa(ctx, carregarMapa) {
+    return carregarMapa.inimigosConfig.map(conf => {
+        if (conf.tipo === "Inimigo2") return new Inimigo2(ctx, conf.x, conf.dir, false, true, 2);
+        return new Inimigo(ctx, conf.x, conf.dir, false, true, 0);
+    });
+}
+
 
 
 
@@ -59,10 +66,9 @@ animate(); // quando o mapa carregar, inicia
 let podePassardefase = true;
 let transicaoEmAndamento = false;
 const player = new Player(ctx,canvas);
-const inimigos = [];
-inimigos.push(new Inimigo(ctx,1000,1,false,true,0));
-inimigos.push(new Inimigo(ctx,600,1,false,true,0));
-const boss = new Boss(ctx, canvas.width / 2, 100);
+//inimigos.push(new Inimigo(ctx,600,1,false,true,0));
+//inimigos.push(new Inimigo2(ctx,700,1,false,true,2));
+let boss = new Boss(ctx, canvas.width / 2, 100);
 const balas = [];
 let canPress = true;
 let canAtirar = true;
@@ -73,7 +79,7 @@ let keys={
 let acao_anterior =0;
 let verifica_estado=true;
 selecionarMapa(seletorDeMapaAtual);
-
+let inimigos = carregarInimigosDoMapa(ctx, mapaAtual);
 // ----------------------------- VARIAVEIS Principais
 
 
@@ -141,8 +147,15 @@ function animate() {
                 p.noChao = true;
                 //console.log("player acao :"+p.acao)
             }
+            //colisao vinda de baixo
+            else if (p.velocity.y < 0 && p.position.y >= plataforma.y + plataforma.h - 7) {
+
+            p.position.y = plataforma.y + plataforma.h;
+            p.velocity.y = 0;
         }
+    }
         });
+        
         player.draw();
         
         inimigos.forEach(async(inimigo, index) => {
@@ -208,14 +221,12 @@ function esperar(ms) {
 
 async function passarDeFase(){
         const podePassardefase = inimigos.some(inimigo => inimigo.vivo);
-
         if(!podePassardefase){
             transicaoEmAndamento=true;
             console.log(inimigos.length+" inimigos")
             alert("Passou De Fase");
             seletorDeMapaAtual++;
             selecionarMapa(seletorDeMapaAtual);
-            trocarDemusica(mapaAtual)
             reiniciarJogo()
             await esperar(900);
             transicaoEmAndamento=false;
@@ -294,11 +305,9 @@ function reiniciarJogo(){
         player.hudLife = 2.7;
         player.position.x = 70;
         player.position.y = canvas.height;
-
+        trocarDemusica(mapaAtual);
         inimigos.splice(0, inimigos.length);
-
-        inimigos.push(new Inimigo(ctx,600,1,false,true,0));  //morrendo,vivo,life
-        inimigos.push(new Inimigo(ctx,1000,1,false,true,0));
+        inimigos =carregarInimigosDoMapa(ctx,mapaAtual);
         boss = new Boss(ctx, canvas.width / 2, 100);
 
         console.log(inimigos)
