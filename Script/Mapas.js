@@ -18,12 +18,12 @@ export function drawMap(ctx, mapaAtual,canvas){
 export const mapas ={
     Praia:{
         nome : "Areia Peluda",
-        background : "./Sprites/Bosses/BossGustavo/background/backgoudEstatico.png",
+        background : "./Sprites/Bosses/BossGustavoPraia/background/backgoudEstatico.png",
         musicPath: "./Audio/Mapas/BossGustavo/audio_gustavo.mpeg",
         width: tileSetPraia.layers[0].width,
         height: tileSetPraia.layers[0].height,
         matriz: tileSetPraia.layers[0].data,
-        tilesetPath: "./Sprites/Bosses/BossGustavo/background/TilesetPraia.png",
+        tilesetPath: "./Sprites/Bosses/BossGustavoPraia/background/TilesetPraia.png",
         inimigosConfig: [
             { tipo: "Inimigo", x: 1600, dir: 1 },
             //{ tipo: "Inimigo2", x: 2000, dir: 1 },

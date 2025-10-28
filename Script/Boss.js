@@ -28,7 +28,7 @@ class Boss {
         this.altura = 200;  // altura de cada quadro (mantida)
         this.largura = 162; // largura aproximada de cada quadro (mantida)
         this.sprite = new Image();
-        this.sprite.src = "Sprites/Bosses/Bossgustavo/sprites/semFundo/boss.png";
+        this.sprite.src = "./Sprites/Bosses/BossGustavoPraia/sprites/semFundo/boss.png";
 
         // vida e estado
         this.life = 0; // conta acertos
