@@ -40,7 +40,7 @@ class Boss {
             x: (Math.random() > 0.5 ? 1 : -1),
             y: (Math.random() > 0.5 ? 1 : -1)
         }
-        this.speed = 1.5; // velocidade base suave
+        this.speed = 1.5; // velocidade base suave 1.5
 
         // timer para mudar direção aleatória
         this.tempoMudancaDirecao = 0;
@@ -72,7 +72,10 @@ class Boss {
         
         this.ctx.drawImage(
             this.sprite,
-            sx, sy, sw, sh,
+            sx, 
+            this.direcao, 
+            sw, 
+            sh,
             this.position.x,
             this.position.y,
             this.size.w,
@@ -121,12 +124,19 @@ class Boss {
         }
 
         // definir direção para animação
+        /*
         if (this.speed * this.velocidadeAleatoria.x > 0) {
             this.acao_anterior = 1; // direita
         } else if (this.speed * this.velocidadeAleatoria.x < 0) {
             this.acao_anterior = 0; // esquerda
         }
-
+        */
+        if (Playerx > this.position.x) {
+                    this.acao_anterior = 190;
+                }
+                else {
+                    this.acao_anterior = 0;
+                }
         // atualiza frames de animação
         this.animateFrames();
 
@@ -135,6 +145,7 @@ class Boss {
 
     animateFrames() {
         this.frameContador++;
+        this.direcao = this.acao_anterior
         if (this.frameContador >= this.frameDelay) {
             this.estado++;
             if (this.estado >= this.maximoframes) {
