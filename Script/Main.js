@@ -54,8 +54,15 @@ animate(); // quando o mapa carregar, inicia
 
 function carregarInimigosDoMapa(ctx, carregarMapa) {
     return carregarMapa.inimigosConfig.map(conf => {
-        if (conf.tipo === "Inimigo2") return new Inimigo2(ctx, conf.x, conf.dir, false, true, 2);
-        return new Inimigo(ctx, conf.x, conf.dir, false, true, 0);
+        if (conf.tipo === "Inimigo2"){
+             return new Inimigo2(ctx, conf.x, conf.dir, false, true, 2);
+        }
+        else if(conf.tipo === "Inimigo"){
+            return new Inimigo(ctx, conf.x, conf.dir, false, true, 0);
+        }
+        else if(conf.tipo === "BossPraia"){
+            return new Boss(ctx, canvas.width / 2, 100);
+        }
     });
 }
 
@@ -68,7 +75,6 @@ let transicaoEmAndamento = false;
 const player = new Player(ctx,canvas);
 //inimigos.push(new Inimigo(ctx,600,1,false,true,0));
 //inimigos.push(new Inimigo2(ctx,700,1,false,true,2));
-let boss = new Boss(ctx, canvas.width / 2, 100);
 const balas = [];
 let canPress = true;
 let canAtirar = true;
@@ -169,10 +175,6 @@ function animate() {
         }
         });
 
-        if (boss.vivo) {
-            boss.update(player.position.y, player.position.x);
-        }
-
 
         // Atualiza e desenha balas
         balas.forEach((bala, index) => {
@@ -191,10 +193,6 @@ function animate() {
                     }
             });
 
-            if (boss.vivo && boss.verificaColisao(bala)) {
-                boss.recebeDano(10);
-                removeBala = true;
-            }
 
             if(removeBala){
                 balas.splice(index, 1);
@@ -308,8 +306,6 @@ function reiniciarJogo(){
         trocarDemusica(mapaAtual);
         inimigos.splice(0, inimigos.length);
         inimigos =carregarInimigosDoMapa(ctx,mapaAtual);
-        boss = new Boss(ctx, canvas.width / 2, 100);
-
         console.log(inimigos)
 }
 

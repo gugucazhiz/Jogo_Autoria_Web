@@ -31,7 +31,8 @@ class Boss {
         this.sprite.src = "./Sprites/Bosses/BossGustavoPraia/sprites/semFundo/boss.png";
 
         // vida e estado
-        this.life = 0; // conta acertos
+        this.life = -2; // conta acertos //como ele verifica se tem mais que 2 acertos
+                     //colocar (-2) vai fazer com que ele conte(-2, -1, 0, 1, 2, 3)(totalizando 5 acertos)
         this.vivo = true;
         this.morrendo = false;
 
@@ -86,7 +87,7 @@ class Boss {
         // this.desenhaVida();
     }
 
-    update(Playery, Playerx) {
+    update(Playery, Playerx,player,inimigos) {
         if (!this.vivo) return;
 
         // movimento aleatório em duas direções sem impulsos (apenas alterna direções)
