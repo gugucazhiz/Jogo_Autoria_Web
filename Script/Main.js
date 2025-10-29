@@ -31,6 +31,9 @@ function selecionarMapa(seletorDeMapaAtual){
         case 4:
             mapaAtual = mapas.Masmorra;
             break;
+        case 5:
+            mapaAtual = mapas.WinScreen;
+            break;
     }
     plataformas = gerarPlataformas(mapaAtual,32)
     console.log("Plataformas geradas:", plataformas.length);
@@ -192,7 +195,7 @@ function animate() {
             
             inimigos.forEach((inimigo, indexInimigo) => {
                 console.log(inimigo.verificaColisao(bala));
-                if (inimigo.vivo && inimigo.verificaColisao(bala)) {
+                if (inimigo.vivo && inimigo.verificaColisao(bala) && !inimigo.morrendo) {
                     inimigo.life += 1;
                     removeBala = true;
                     }
@@ -212,6 +215,7 @@ function animate() {
 
 async function inimigoMorreu(inimigo,index){
                 inimigo.morreu();
+                player.PowerAtual(1)
                 await esperar(900);
                 if(transicaoEmAndamento){return}
                 console.log("deletou")
@@ -224,7 +228,7 @@ function esperar(ms) {
 
 async function passarDeFase(){
         const podePassardefase = inimigos.some(inimigo => inimigo.vivo);
-        if(!podePassardefase){
+        if(!podePassardefase && mapaAtual != mapas.WinScreen){
             transicaoEmAndamento=true;
             console.log(inimigos.length+" inimigos")
             alert("Passou De Fase");
@@ -241,6 +245,10 @@ function trocarDemusica(escolhaMapa){
 }
 //Tela De Morte Player
 function desenharTelaDeMorte() {
+    player.qntInimigosMortos =0
+    player.PowerAtual(0);
+    player.poderAtivado = false;
+    player.timeOutTiroNormal = 700;
     //passa parametros da tela de morte
     abaixarVolume()
     drawMap(ctx,mapas.DeathScreen,canvas);
@@ -319,6 +327,8 @@ function agachar(){
 
 
 function reiniciarJogo(){
+        keys.left = false;
+        keys.right =false;
         player.gameOver =false;
         player.life = 3;
         player.hudLife = 2.7;
@@ -368,7 +378,7 @@ document.addEventListener("keydown", ({code}) => {
         reiniciarJogo();
     }
 
-    if(code === "KeyP"){
+    if(code === "KeyP" && player.qntInimigosMortos ==4){
         player.powerUp();
     }
 
