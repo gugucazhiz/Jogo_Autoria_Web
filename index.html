@@ -3,16 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="Estilos/mapa.css">
+    <title>Aqua Adventure</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: rgb(1, 1, 24);
+        }
+        .hero{
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; 
+        }
+        .titulo-container {
+            display: flex;
+            align-items: center; 
+                      
+        }
+
+        .hero h1{
+            color: white;
+            font-size: 5rem;
+        }
+
+        .hero span{
+            color: white;
+            font-size: 2rem;
+            margin-top: 3rem; 
+        }
+
+        .hero .img{
+            width: 10rem;
+            height: auto;
+        }
+          video {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            display: none;
+        }
+        @keyframes piscar {
+            0%   { opacity: 1; } 
+            50%  { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        .pisca {
+            animation-name: piscar;             
+            animation-duration: 1.8s;          
+            animation-iteration-count: infinite; 
+            color: #ffffff; 
+        }
+    </style>
 </head>
 <body>
-    <canvas id="canvas"></canvas>
-    <script src="Script\player.js"></script>
-    <script src="Script\Inimigo.js"></script>
-    <script src="Script/Boss.js"></script>
-    <script type="module" src="Script\SonsEMusicas.js"></script>
-    <script type="module" src="Script\Mapas.js"></script>
-    <script type="module" src="Script\Main.js"></script>
+    <div class="hero">
+        <div class="titulo-container">
+            <h1>Aqua <br>Adventure</h1>
+            <img class="img" src="./Sprites/Player/personagem.png" alt="">
+        </div>
+        <span class="pisca">APERTE ENTER PRA COMEÇAR</span>
+    </div>
+
+    <video id="cutscene" src="./cutscenes/cutscene.mp4"></video>
+
+    <script>
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+            iniciarCutscene();
+            }
+        });
+
+        function iniciarCutscene() {
+            const video = document.getElementById("cutscene");
+            video.style.display = "block";
+            video.play();
+            video.requestFullscreen();
+
+            video.addEventListener("ended", () => {
+            window.location.href = "jogo.html";
+            });
+        }
+    </script>
 </body>
 </html>
