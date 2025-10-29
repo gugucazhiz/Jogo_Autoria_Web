@@ -14,6 +14,7 @@ class Boss {
         }
         this.gravidade = 0.8;
         this.ctx = ctx;
+        this.atingido = true;
 
         // controle de Frames
         this.estado = 0;
@@ -35,6 +36,9 @@ class Boss {
         //colocar (-2) vai fazer com que ele conte(-2, -1, 0, 1, 2, 3)(totalizando 5 acertos)
         this.vivo = true;
         this.morrendo = false;
+        this.podeDarDano = true;
+        this.ultimoDano = 0;
+        this.cooldownDano = 2000; // 2 segundos em milissegundos
 
         // movimento aleatório
         this.velocidadeAleatoria = {
@@ -101,7 +105,7 @@ class Boss {
             this.intervaloMudanca = 60 + Math.floor(Math.random() * 120);
         }
 
-        // aplica velocidade base suave
+        // aplica velocidade suave
         this.position.x += this.speed * this.velocidadeAleatoria.x;
         this.position.y += this.speed * this.velocidadeAleatoria.y;
 
@@ -133,6 +137,7 @@ class Boss {
             this.acao_anterior = 0; // esquerda
         }
         */
+
         if (Playerx > this.position.x) {
             this.acao_anterior = 190;
         }
@@ -142,10 +147,8 @@ class Boss {
         // atualiza frames de animação
         this.animateFrames();
 
-        if (this.verificaHitboxPlayer(Playerx, Playery, player.size.w, player.size.h)) {
-            player.helthAtual(1); // tirar vida do player
-            console.log("Player atingido pelo Boss!");
-        }
+        this.verificaHitboxPlayer(Playerx, Playery, player);
+        // Verifica colisão do boss com o player
 
         this.draw();
     }
@@ -164,7 +167,7 @@ class Boss {
 
     verificaColisao(bala) {
         return (
-            bala.position.x < this.position.x + (this.largura - 20) &&
+            bala.position.x < this.position.x + (this.largura - 70) &&
             bala.position.x + bala.size.width > this.position.x &&
             bala.position.y < this.position.y + (this.altura - 20) &&
             bala.position.y + bala.size.height > this.position.y
@@ -187,12 +190,37 @@ class Boss {
         console.log("Boss morreu!");
     }
 
-    verificaHitboxPlayer(Playerx, Playery, playerWidth, playerHeight) {
-        const dentroX = Math.abs(this.position.x - Playerx) < (this.size.w + playerWidth) / 2;
-        const dentroY = Math.abs(this.position.y - Playery) < (this.size.h + playerHeight) / 2;
-        return dentroX && dentroY;
+    verificaHitboxPlayer(Playerx, Playery, player) {
+
+
+        this.atingido = false;
+        console.log("Chamou o metodo")
+        let hitboxX = 100;
+        let hitboxY = 100;
+        const dentroX = Math.abs(this.position.x - Playerx) < hitboxX / 2;
+        const dentroY = Math.abs(this.position.y - Playery) < hitboxY;
+
+        const tempoAgora = Date.now();
+        if (tempoAgora - this.ultimoDano < this.cooldownDano) {
+            return; // Ainda está em cooldown
+        }
+
+        if (dentroX && dentroY && this.podeDarDano) {
+            player.helthAtual(1);
+            // tirar vida do player
+            console.log("Player atingido pelo Boss!");
+
+            this.ultimoDano = tempoAgora;
+            this.podeDarDano = false;
+
+            // Reseta o podeDarDano após o cooldown
+            setTimeout(() => {
+                this.podeDarDano = true;
+            }, this.cooldownDano);
+        }
     }
 
-
-
+    isAtingido() {
+        this.atingido = true;
+    }
 }
