@@ -3,6 +3,7 @@ const gravidade = 1;
 
 class Player{
     constructor(ctx,canvas){
+        this.canvas = canvas;
         this.ctx =ctx;
         this.position = {
             x : canvas.width/2,
@@ -171,6 +172,11 @@ class Player{
             140, //tamanho da imagem
             60
         );
+        if(this.qntInimigosMortos == 4){
+            this.ctx.font = "18px Arial";
+            this.ctx.fillStyle = "gold";
+            this.ctx.fillText("Pressione 'P' para Usar AK", this.canvas.width/2-480,this.canvas.height/11);
+        }
         
     }
     update(){   
