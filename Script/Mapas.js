@@ -4,6 +4,8 @@ const response2 = await fetch('matrizMap/TileSetSkate/tilesetSkate.tmj');
 const tileSetSkate = await response2.json();
 const response3 = await fetch('matrizMap/TileSetCeu/tileSetCeu.tmj');
 const tileSetCeu = await response3.json();
+const response4 = await fetch('matrizMap/TileSetMasmorra/tilesetMasmorra.tmj');
+const tileSetMasmorra = await response4.json();
 
 
 export function drawMap(ctx, mapaAtual,canvas){
@@ -39,6 +41,10 @@ export const mapas = {
         nome : "Covil locado",
         background :  "./Sprites/Bosses/BossAlan/background/backgoroundEstatico.png",
         musicPath: "./Audio/Mapas/BossAlan/audio_alan.mpeg",
+        width: tileSetMasmorra.layers[0].width,
+        height: tileSetMasmorra.layers[0].height,
+        matriz: tileSetMasmorra.layers[0].data,
+        tilesetPath: "./Sprites/Bosses/BossAlan/background/tilesetMasmorra.png",
         inimigosConfig: [
             { tipo: "Inimigo", x: 1600, dir: 1 },
             { tipo: "Inimigo2", x: -2000, dir: 1 },
