@@ -245,7 +245,7 @@ function desenharTelaDeMorte() {
     ctx.fillStyle = "black";
     ctx.textAlign = "center";
     ctx.font = "40px Arial";
-    ctx.fillText("Pressione 'U' para reiniciar", canvas.width / 2, canvas.height / 2 +250);
+    ctx.fillText("Pressione 'U' para reiniciar", canvas.width / 2, canvas.height / 2 +300);
 }
 
 function doAction(){
