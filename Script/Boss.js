@@ -32,7 +32,7 @@ class Boss {
 
         // vida e estado
         this.life = -2; // conta acertos //como ele verifica se tem mais que 2 acertos
-                     //colocar (-2) vai fazer com que ele conte(-2, -1, 0, 1, 2, 3)(totalizando 5 acertos)
+        //colocar (-2) vai fazer com que ele conte(-2, -1, 0, 1, 2, 3)(totalizando 5 acertos)
         this.vivo = true;
         this.morrendo = false;
 
@@ -70,12 +70,12 @@ class Boss {
         const sy = linha * this.altura; // coordenada Y da sprite sheet
         const sw = this.largura; // largura do frame
         const sh = this.altura; // altura do frame
-        
+
         this.ctx.drawImage(
             this.sprite,
-            sx, 
-            this.direcao, 
-            sw, 
+            sx,
+            this.direcao,
+            sw,
             sh,
             this.position.x,
             this.position.y,
@@ -87,7 +87,8 @@ class Boss {
         // this.desenhaVida();
     }
 
-    update(Playery, Playerx,player,inimigos) {
+    update(Playery, Playerx, player, inimigos) {
+
         if (!this.vivo) return;
 
         // movimento aleatório em duas direções sem impulsos (apenas alterna direções)
@@ -133,13 +134,18 @@ class Boss {
         }
         */
         if (Playerx > this.position.x) {
-                    this.acao_anterior = 190;
-                }
-                else {
-                    this.acao_anterior = 0;
-                }
+            this.acao_anterior = 190;
+        }
+        else {
+            this.acao_anterior = 0;
+        }
         // atualiza frames de animação
         this.animateFrames();
+
+        if (this.verificaHitboxPlayer(Playerx, Playery, player.size.w, player.size.h)) {
+            player.helthAtual(1); // tirar vida do player
+            console.log("Player atingido pelo Boss!");
+        }
 
         this.draw();
     }
@@ -165,7 +171,7 @@ class Boss {
         );
     }
 
-    recebeDano() {
+    recebeDanoDoBoss() {
         if (!this.morrendo) {
             this.life += 1; // conta 1 por bala
             if (this.life >= 5) { // morre com 5 balas
@@ -186,4 +192,7 @@ class Boss {
         const dentroY = Math.abs(this.position.y - Playery) < (this.size.h + playerHeight) / 2;
         return dentroX && dentroY;
     }
+
+
+
 }

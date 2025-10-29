@@ -15,7 +15,7 @@ export function drawMap(ctx, mapaAtual,canvas){
     drawTiles(ctx, mapaAtual, 32, tilesetImage);
 }
 
-export const mapas ={
+export const mapas = {
     Praia:{
         nome : "Areia Peluda",
         background : "./Sprites/Bosses/BossGustavoPraia/background/backgoudestatico.png",

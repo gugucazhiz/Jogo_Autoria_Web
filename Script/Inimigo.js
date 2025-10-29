@@ -115,6 +115,7 @@ class Inimigo{
 
             let hitboxX = 40;
             let hitboxY = 40;
+            
             //console.log(this.velocity.y)
             const dentroX = Math.abs(this.position.x - Playerx) < hitboxX / 2;
             const dentroY = Math.abs(this.position.y - Playery) < hitboxY;
