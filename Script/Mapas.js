@@ -26,7 +26,7 @@ export const mapas ={
         tilesetPath: "./Sprites/Bosses/BossGustavoPraia/background/tileSetPraia.png",
         inimigosConfig: [
             { tipo: "BossPraia", x: 1600, dir: 1 },
-            //{ tipo: "Inimigo", x: 1600, dir: 1 },
+            { tipo: "Inimigo", x: 1600, dir: 1 },
             //{ tipo: "Inimigo2", x: 2000, dir: 1 },
             //{ tipo: "Inimigo", x: 1200, dir: 1 },
             //{ tipo: "Inimigo", x: 3000, dir: 1 },

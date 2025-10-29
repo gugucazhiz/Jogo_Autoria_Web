@@ -132,8 +132,8 @@ class Player{
         this.ctx.drawImage(
             this.spriteVida,
             0 * 210,
-            this.hudLife * 190, //2.7 full Life //1.8  2/3 life // 0.9 1/3 life // 0.1 = 0 life
-            460,
+            this.hudLife * 205, //2.7 full Life //1.9  2/3 life // 0.9 1/3 life // 0.1 = 0 life
+            400,
             200,
             this.positionVida.x,
             this.positionVida.y,
@@ -234,10 +234,10 @@ class Player{
                 this.hudLife = 2.7
                 break;
             case 2:
-                this.hudLife = 1.7
+                this.hudLife = 1.68
                 break;
             case 1:
-                this.hudLife = 0.9
+                this.hudLife = 0.80
                 break;
             case 0:
                 this.hudLife = 0
