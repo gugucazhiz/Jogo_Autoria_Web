@@ -25,6 +25,11 @@ class Player{
             x : 0,
             y : 0
         }
+        //powerup
+        this.timeOutTiroNormal = 700; //Ak 300 //normal 700
+        this.qntInimigosMortos = 0 //se matar 4 sem morrer pode ativar o poder
+        this.poderAtivado = false;
+
         //So,m
         this.audioDano = new Audio("./Audio/Player/PlayerTakingDamage.mp3")
         this.audioDano.volume = 0.025
@@ -222,9 +227,21 @@ class Player{
     pararPlayer(){
             this.setAcao("parado");
             this.estado = (this.acao_anterior === 1)? 2.4 : 5.6;
-            }
-
-
+    }
+    powerUp(){
+        this.poderAtivado = true;
+        this.timeOutTiroNormal = 220;
+        console.log(this.life)
+        if(this.life != 3){
+            this.life +=2;
+            this.helthAtual(1)
+        }
+        setTimeout(() => {
+            this.poderAtivado = false
+            //console.log("valor de timeout Atual: "+this.timeOutTiroNormal)
+            this.timeOutTiroNormal = 700;
+        },10000)
+    }
     helthAtual(vidaAserTirada){
         this.audioDano.play();
         this.life = this.life - vidaAserTirada;
