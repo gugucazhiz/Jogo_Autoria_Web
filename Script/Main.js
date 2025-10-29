@@ -262,7 +262,7 @@ function limpaEstado(){
     verifica_estado = false;
 }
 function click_e_enter_tiro(){
-    if(canAtirar && !(player.gameOver)){
+    if(canAtirar && !(player.gameOver) && !player.acao.startsWith("agachado")){
         canAtirar=false;
         const direcao = (player.acao_anterior === 1) ? "direita" : "esquerda";
         //Posição a onde a bala vai surgir
@@ -301,7 +301,7 @@ function reiniciarJogo(){
         player.gameOver =false;
         player.life = 3;
         player.hudLife = 2.7;
-        player.position.x = 70;
+        player.position.x = canvas.width/2;
         player.position.y = canvas.height;
         trocarDemusica(mapaAtual);
         inimigos.splice(0, inimigos.length);
@@ -337,6 +337,10 @@ document.addEventListener("keydown", ({code}) => {
         player.acao ="esquerda";
         player.acao_anterior = 0;
     }
+    if (code === "KeyS"){
+        player.setAcao(player.acao_anterior === 0 ? "agachadoE" : "agachadoD");
+        console.log("agachou: "+ player.acao_anterior)
+    }
     if(code === "Enter"){
         click_e_enter_tiro();
     }
@@ -361,10 +365,13 @@ document.addEventListener("keyup", ({code}) =>{
 })
 
 
-
+let jogoiniciado = false;
 // Quando o sprite carregar, inicia o loop
 player.sprite.onload = () => {
-    addMusic(mapaAtual);
-    console.log("Trocou de musica")
-    animate();
+    if(!jogoiniciado){
+        jogoiniciado = true;
+        addMusic(mapaAtual);
+        console.log("Trocou de musica")
+        animate();
+    }
 };

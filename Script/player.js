@@ -5,9 +5,9 @@ class Player{
     constructor(ctx,canvas){
         this.ctx =ctx;
         this.position = {
-            x : 190,
-            y : 20,
-            //canvas.height
+            x : canvas.width/2,
+            y : canvas.height,
+            //
         }
         this.positionVida = {
             //mexa somente no numero fora dos parenteses
@@ -29,8 +29,13 @@ class Player{
         this.audioDano = new Audio("./Audio/Player/PlayerTakingDamage.mp3")
         this.audioDano.volume = 0.025
         //Imagens
+        this.normais =  "Sprites/Player/personagem_correndo.png"
+        this.agachado = "./Sprites/Player/agachado_e_aleatorio.png";
         this.sprite = new Image();
-        this.sprite.src = "Sprites/Player/personagem_correndo.png"
+        this.sprite.src = this.normais
+
+        
+
         this.spriteVida = new Image();
         this.spriteVida.src = "Sprites/Hud/vidas.png"
         //vida
@@ -38,6 +43,7 @@ class Player{
         this.life =3;
         this.hudLife =2.7;
         //Controle Framess
+        this.alturaDochao= 110;
         this.noChao = false;
         this.emcimaPlataforma=false
         this.altura =210;
@@ -49,6 +55,38 @@ class Player{
         this.frameDelay =10;   //Fps
         this.acao = "parado";  //Animacao Atual
         this.acao_anterior =0; //ultima direção olhada
+    }
+    setAcao(novaAcao) {
+        if (this.acao === novaAcao) return;
+
+        this.acao = novaAcao;
+        switch (this.acao) {
+            case "parado":
+            case "esquerda":
+            case "direita":
+            case "pulando":
+            case "atirandoE":
+            case "atirandoD":
+                this.frameDelay = 15;
+                this.alturaDochao = 110
+                this.altura =210;
+                this.largura =210;
+                this.maximoframes =5
+                this.sprite.src = this.normais;
+                break;
+            case "agachadoE":
+            case "agachadoD":
+                this.maximoframes =2;
+                this.estado =0;
+                this.frameDelay = 15;
+                this.alturaDochao = 105
+                this.position.y += 10;
+                this.altura =180;
+                this.largura =180;
+                this.sprite.src = this.agachado;
+                
+                break;
+        }
     }
     draw(){
         let linha; //cordenada y do spriteSheet
@@ -71,6 +109,12 @@ class Player{
             case "atirandoD":
                 linha = 3;
                 break;
+            case "agachadoE":
+                linha =0;
+                break;
+            case "agachadoD":
+                linha =1;
+                break;
         }
         // playear
         this.ctx.drawImage(
@@ -87,18 +131,18 @@ class Player{
         //Vida do player
         this.ctx.drawImage(
             this.spriteVida,
-            0 * this.largura,
-            this.hudLife * this.altura-30, //2.7 full Life //1.8  2/3 life // 0.9 1/3 life // 0.1 = 0 life
-            this.largura+250,
-            this.altura-10,
+            0 * 210,
+            this.hudLife * 190, //2.7 full Life //1.8  2/3 life // 0.9 1/3 life // 0.1 = 0 life
+            460,
+            200,
             this.positionVida.x,
             this.positionVida.y,
-            this.largura,
-            this.altura-110
+            210,
+            100
         );
         
     }
-    update(){
+    update(){   
 
         //posicao vertical
             if (!this.noChao) {
@@ -108,8 +152,8 @@ class Player{
             this.noChao = false;
 
             //chao principal
-        if (this.position.y > canvas.height - 110) {
-                this.position.y = canvas.height - 110;
+        if (this.position.y > canvas.height - this.alturaDochao) {
+                this.position.y = canvas.height - this.alturaDochao;
                 this.velocity.y = 0;
                 this.noChao = true;
         }
@@ -117,7 +161,7 @@ class Player{
         if (this.velocity.y > 1) {
                 //console.log("velo "+this.velocity.y)
                 //console.log("esta pulando")
-                this.acao = "pulando";
+                this.setAcao("pulando");
                 this.estado = 4;
                 this.maximoframes = 5;
         }
@@ -126,10 +170,10 @@ class Player{
             //this.position.y = canvas.height -110;
             if(this.acao === "pulando"){
                 if(this.velocity.x !== 0) {
-                    this.acao = (this.acao_anterior === 0)? "esquerda" : "direita";
+                    this.setAcao(this.acao_anterior === 0 ? "esquerda" : "direita");
                 }
                 else{
-                    this.acao = "parado";
+                    this.setAcao("parado");
                         
                 }
             }
@@ -154,7 +198,7 @@ class Player{
             //ele ja somava automaticamente 0.8 ao valor de 2.4 ou 5.6 que são respectivamente posicoes
             //do personagem parado
             if ((this.acao === "parado" ) && (this.estado === 2.4 || this.estado === 5.6)) {
-                this.acao = (this.acao_anterior === 0)? "esquerda" : "direita";
+                this.setAcao(this.acao_anterior === 0 ? "esquerda" : "direita");
                 this.estado = 0;
             }
             this.animateFrames();
@@ -176,7 +220,7 @@ class Player{
     }
     }
     pararPlayer(){
-            this.acao = "parado";
+            this.setAcao("parado");
             this.estado = (this.acao_anterior === 1)? 2.4 : 5.6;
             }
 
