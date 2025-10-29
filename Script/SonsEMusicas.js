@@ -9,6 +9,12 @@ export function playTiro(){
             tiro.play();
         }
 
+export function playAgachar(){
+            const agachar = new Audio("./Audio/Player/PersonagemAgachando.mp3");
+            agachar.volume = 0.1;
+            agachar.play()
+}
+
 function alterarVolume(musicaAtual){
     if(musicaAtual === mapas.Praia || musicaAtual === mapas.Masmorra){
         musica.volume = 0.07;

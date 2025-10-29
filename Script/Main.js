@@ -9,7 +9,7 @@ canvas.height = innerHeight;
 //-------------------------SELETOR DE MAPAS E MUSCAS
 
 import { drawMap,mapas,gerarPlataformas} from "./Mapas.js";
-import { playTiro,addMusic,abaixarVolume} from "./SonsEMusicas.js";
+import { playTiro,addMusic,abaixarVolume, playAgachar} from "./SonsEMusicas.js";
 
 
 let seletorDeMapaAtual =1;
@@ -76,8 +76,10 @@ const player = new Player(ctx,canvas);
 //inimigos.push(new Inimigo(ctx,600,1,false,true,0));
 //inimigos.push(new Inimigo2(ctx,700,1,false,true,2));
 const balas = [];
+let isAgachando = false;
 let canPress = true;
 let canAtirar = true;
+let canAgachar = true;
 let keys={
     left: false,
     right: false,
@@ -297,6 +299,22 @@ function click_e_enter_tiro(){
     }
 }
 
+function waitAgachar(){
+    canAgachar = true;
+}
+
+function agachar(){
+    if(isAgachando) return;
+        isAgachando = true;
+        canAgachar =false;
+        playAgachar();
+        player.setAcao(player.acao_anterior === 0 ? "agachadoE" : "agachadoD");
+        console.log("agachou: "+ player.acao_anterior)
+        
+        setTimeout(waitAgachar,1000)
+}
+
+
 function reiniciarJogo(){
         player.gameOver =false;
         player.life = 3;
@@ -337,9 +355,8 @@ document.addEventListener("keydown", ({code}) => {
         player.acao ="esquerda";
         player.acao_anterior = 0;
     }
-    if (code === "KeyS"){
-        player.setAcao(player.acao_anterior === 0 ? "agachadoE" : "agachadoD");
-        console.log("agachou: "+ player.acao_anterior)
+    if (code === "KeyS" && canAgachar){
+        agachar();
     }
     if(code === "Enter"){
         click_e_enter_tiro();
@@ -360,6 +377,10 @@ document.addEventListener("keyup", ({code}) =>{
     }
     if (code === "KeyA"){
         keys.left=false;
+        verifica_estado = true;
+    }
+    if (code === "KeyS"){
+        isAgachando = false;
         verifica_estado = true;
     }
 })
