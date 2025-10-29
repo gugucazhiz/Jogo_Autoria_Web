@@ -189,7 +189,7 @@ function animate() {
             
             inimigos.forEach((inimigo, indexInimigo) => {
                 console.log(inimigo.verificaColisao(bala));
-                if (inimigo.vivo && inimigo.verificaColisao(bala)) {
+                if (inimigo.vivo && inimigo.verificaColisao(bala) && !inimigo.morrendo) {
                     inimigo.life += 1;
                     removeBala = true;
                     }
@@ -209,6 +209,7 @@ function animate() {
 
 async function inimigoMorreu(inimigo,index){
                 inimigo.morreu();
+                player.PowerAtual(1)
                 await esperar(900);
                 if(transicaoEmAndamento){return}
                 console.log("deletou")
@@ -365,7 +366,7 @@ document.addEventListener("keydown", ({code}) => {
         reiniciarJogo();
     }
 
-    if(code === "KeyP"){
+    if(code === "KeyP" && player.qntInimigosMortos ==4){
         player.powerUp();
     }
 

@@ -14,7 +14,11 @@ class Player{
             x : (canvas.width/2)-90,
             y : 20,
         }
-
+        this.positionPower = {
+            //mexa somente no numero fora dos parenteses
+            x : (canvas.width/2)-650,
+            y : 40,
+        }
         this.size = {
             width : 2,
             height : 20,
@@ -27,7 +31,8 @@ class Player{
         }
         //powerup
         this.timeOutTiroNormal = 700; //Ak 300 //normal 700
-        this.qntInimigosMortos = 0 //se matar 4 sem morrer pode ativar o poder
+        this.powerHud =0;
+        this.qntInimigosMortos = 0; //se matar 4 sem morrer pode ativar o poder
         this.poderAtivado = false;
 
         //So,m
@@ -39,8 +44,9 @@ class Player{
         this.sprite = new Image();
         this.sprite.src = this.normais
 
-        
-
+        //huds
+        this.spritePower = new Image ();
+        this.spritePower.src = "/Sprites/Hud/aka.png"
         this.spriteVida = new Image();
         this.spriteVida.src = "Sprites/Hud/vidas.png"
         //vida
@@ -110,9 +116,16 @@ class Player{
                 break;
             case "atirandoE":
                 linha = 2;
+                if(this.poderAtivado){
+                    linha = 3;
+                    this.estado = 3.2;
+                }
                 break;
             case "atirandoD":
                 linha = 3;
+                if(this.poderAtivado){
+                    this.estado = 2.4;
+                }
                 break;
             case "agachadoE":
                 linha =0;
@@ -137,13 +150,26 @@ class Player{
         this.ctx.drawImage(
             this.spriteVida,
             0 * 210,
-            this.hudLife * 205, //2.7 full Life //1.9  2/3 life // 0.9 1/3 life // 0.1 = 0 life
+            this.hudLife * 205, //2.7 full Life //1.68  2/3 life // 0.8 1/3 life // 0.1 = 0 life0 life
             400,
             200,
             this.positionVida.x,
             this.positionVida.y,
             210,
             100
+        );
+
+        //Power
+        this.ctx.drawImage(
+            this.spritePower,
+            0 * 200,
+            this.powerHud * 200, //4.35 =4p //3.27 =3p//2.13 = 2p // 1 = 1p // 0 = 0 p
+            600, //zoom na imagem
+            200,
+            this.positionPower.x,
+            this.positionPower.y,
+            140, //tamanho da imagem
+            60
         );
         
     }
@@ -233,10 +259,12 @@ class Player{
         this.timeOutTiroNormal = 220;
         console.log(this.life)
         if(this.life != 3){
-            this.life +=2;
-            this.helthAtual(1)
+            this.life +=2; //adiciona mais 2 de vida
+            this.helthAtual(1) //tira 1 de vida e atualiza hud
+                            //no final player ganha 1+ vida
         }
         setTimeout(() => {
+            this.PowerAtual(-4) //zera barra de progressao do poder
             this.poderAtivado = false
             //console.log("valor de timeout Atual: "+this.timeOutTiroNormal)
             this.timeOutTiroNormal = 700;
@@ -245,7 +273,7 @@ class Player{
     helthAtual(vidaAserTirada){
         this.audioDano.play();
         this.life = this.life - vidaAserTirada;
-        //2.7 full Life //1.8  2/3 life // 0.9 1/3 life // 0.1 = 0 life
+        //2.7 full Life //1.68  2/3 life // 0.8 1/3 life // 0 = 0 life0 life
         switch(this.life){
             case 3:
                 this.hudLife = 2.7
@@ -254,7 +282,7 @@ class Player{
                 this.hudLife = 1.68
                 break;
             case 1:
-                this.hudLife = 0.80
+                this.hudLife = 0.8
                 break;
             case 0:
                 this.hudLife = 0
@@ -263,6 +291,33 @@ class Player{
             default:
                 this.hudlife = 0;
                 this.gameOver = true;
+                break;
+        }
+    }
+
+    PowerAtual(kill){
+        this.qntInimigosMortos += kill;
+        //2.7 full Life //1.8  2/3 life // 0.9 1/3 life // 0.1 = 0 life
+        switch(this.qntInimigosMortos){
+            case 0:
+                this.powerHud = 0;
+                break;
+            case 1:
+                this.powerHud = 1
+                break;
+            case 2:
+                this.powerHud = 2.13;
+                break;
+            case 3:
+                this.powerHud = 3.27
+                break;
+            case 4:
+                this.powerHud = 4.35;
+                break;
+            default:
+                this.powerHud = 4.35;
+                this.qntInimigosMortos =4;
+                break;
         }
     }
 }

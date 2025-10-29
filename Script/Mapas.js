@@ -33,7 +33,10 @@ export const mapas = {
             { tipo: "Inimigo", x: 1200, dir: 1 },
             { tipo: "Inimigo", x: 3000, dir: 1 },
             { tipo: "Inimigo", x: -800, dir: 1 },
-            { tipo: "Inimigo2", x: 2550, dir: 1 }
+            { tipo: "Inimigo2", x: 2550, dir: 1 },
+            { tipo: "Inimigo2", x: -1550, dir: 1 },
+            { tipo: "Inimigo2", x: 3650, dir: 1 },
+            { tipo: "Inimigo2", x: -3550, dir: 1 },
         ]
     },
 
@@ -92,7 +95,9 @@ export const mapas = {
             { tipo: "Inimigo", x: 1200, dir: 1 },
             { tipo: "Inimigo", x: 3000, dir: 1 },
             { tipo: "Inimigo2", x: -800, dir: 1 },
-            { tipo: "Inimigo2", x: 2550, dir: 1 }
+            { tipo: "Inimigo2", x: 2550, dir: 1 },
+            { tipo: "Inimigo2", x: -1000, dir: 1 },
+            { tipo: "Inimigo2", x: 1800, dir: 1 },
         ]
     },
 
