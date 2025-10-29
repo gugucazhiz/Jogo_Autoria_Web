@@ -106,6 +106,15 @@ export const mapas = {
         background: "Sprites/Hud/youDied.png",
         musicPath: "./Audio/Mapas/TelaDeMorte/DeathSong.mp3",
         matriz:[]
+    },
+
+
+    WinScreen:{
+        nome: "Tela De Morte",
+        background: "./Sprites/Hud/telaVitoria.png",
+        musicPath: "./Audio/Mapas/TelaVitoria/somVitoria.mp3",
+        matriz:[],
+        inimigosConfig: [],
     }
 };
 

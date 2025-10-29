@@ -31,6 +31,9 @@ function selecionarMapa(seletorDeMapaAtual){
         case 4:
             mapaAtual = mapas.Masmorra;
             break;
+        case 5:
+            mapaAtual = mapas.WinScreen;
+            break;
     }
     plataformas = gerarPlataformas(mapaAtual,32)
     console.log("Plataformas geradas:", plataformas.length);
@@ -222,7 +225,7 @@ function esperar(ms) {
 
 async function passarDeFase(){
         const podePassardefase = inimigos.some(inimigo => inimigo.vivo);
-        if(!podePassardefase){
+        if(!podePassardefase && mapaAtual != mapas.WinScreen){
             transicaoEmAndamento=true;
             console.log(inimigos.length+" inimigos")
             alert("Passou De Fase");
