@@ -295,7 +295,7 @@ function click_e_enter_tiro(){
                 player.pararPlayer();
             }
         },200);
-        setTimeout(tiro,700);
+        setTimeout(tiro,player.timeOutTiroNormal);
     }
 }
 
@@ -363,6 +363,10 @@ document.addEventListener("keydown", ({code}) => {
     }
     if(code === "KeyU" && player.gameOver){
         reiniciarJogo();
+    }
+
+    if(code === "KeyP"){
+        player.powerUp();
     }
 
 })
