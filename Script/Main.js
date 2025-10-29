@@ -239,6 +239,10 @@ function trocarDemusica(escolhaMapa){
 }
 //Tela De Morte Player
 function desenharTelaDeMorte() {
+    player.qntInimigosMortos =0
+    player.PowerAtual(0);
+    player.poderAtivado = false;
+    player.timeOutTiroNormal = 700;
     //passa parametros da tela de morte
     abaixarVolume()
     drawMap(ctx,mapas.DeathScreen,canvas);
