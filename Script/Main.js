@@ -324,6 +324,8 @@ function agachar(){
 
 
 function reiniciarJogo(){
+        keys.left = false;
+        keys.right =false;
         player.gameOver =false;
         player.life = 3;
         player.hudLife = 2.7;
