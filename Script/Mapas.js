@@ -26,7 +26,7 @@ export const mapas ={
         tilesetPath: "./Sprites/Bosses/BossGustavoPraia/background/tileSetPraia.png",
         inimigosConfig: [
             { tipo: "BossPraia", x: 1600, dir: 1 },
-            { tipo: "Inimigo", x: 1600, dir: 1 },
+            //{ tipo: "Inimigo", x: 1600, dir: 1 },
             //{ tipo: "Inimigo2", x: 2000, dir: 1 },
             //{ tipo: "Inimigo", x: 1200, dir: 1 },
             //{ tipo: "Inimigo", x: 3000, dir: 1 },
@@ -40,7 +40,12 @@ export const mapas ={
         background :  "./Sprites/Bosses/BossAlan/background/backgoroundEstatico.png",
         musicPath: "./Audio/Mapas/BossAlan/audio_alan.mpeg",
         inimigosConfig: [
-            { tipo: "Inimigo", x: 600, dir: 1 },
+            { tipo: "Inimigo", x: 1600, dir: 1 },
+            { tipo: "Inimigo2", x: -2000, dir: 1 },
+            { tipo: "Inimigo", x: 1200, dir: 1 },
+            { tipo: "Inimigo", x: 3000, dir: 1 },
+            //{ tipo: "Inimigo", x: -800, dir: 1 },
+            //{ tipo: "Inimigo2", x: 2550, dir: 1 }
             
         ]
     },
@@ -54,11 +59,13 @@ export const mapas ={
         matriz: tileSetSkate.layers[0].data,
         tilesetPath: "./Sprites/Bosses/BossDavi/background/skateTiles.png",
         inimigosConfig: [
-            { tipo: "Inimigo", x: 3000, dir: 1 },
+            { tipo: "Inimigo", x: 2600, dir: 1 },
+            { tipo: "Inimigo2", x: 2300, dir: 1 },
             { tipo: "Inimigo", x: 3500, dir: 1 },
             { tipo: "Inimigo2", x: -4000, dir: 1 },
             { tipo: "Inimigo", x: 3800, dir: 1 },
             { tipo: "Inimigo", x: 1500, dir: 1 },
+            { tipo: "Inimigo2", x: 1900, dir: 1 },
             { tipo: "Inimigo", x: -2080, dir: 1 },
             { tipo: "Inimigo2", x: 1550, dir: 1 }
         ]
@@ -73,13 +80,13 @@ export const mapas ={
         matriz: tileSetCeu.layers[0].data,
         tilesetPath: "./Sprites/Bosses/BossNayan/background/tileSetCeu.png",
         inimigosConfig: [
-            { tipo: "Inimigo", x: 600, dir: 1 },
             //{ tipo: "Inimigo", x: 600, dir: 1 },
-            //{ tipo: "Inimigo2", x: 700, dir: 1 },
-            //{ tipo: "Inimigo", x: 800, dir: 1 },
-            //{ tipo: "Inimigo", x: 1000, dir: 1 },
-            //{ tipo: "Inimigo", x: -600, dir: 1 },
-            //{ tipo: "Inimigo2", x: 1550, dir: 1 }
+            { tipo: "Inimigo", x: 1600, dir: 1 },
+            { tipo: "Inimigo2", x: -2000, dir: 1 },
+            { tipo: "Inimigo", x: 1200, dir: 1 },
+            { tipo: "Inimigo", x: 3000, dir: 1 },
+            { tipo: "Inimigo2", x: -800, dir: 1 },
+            { tipo: "Inimigo2", x: 2550, dir: 1 }
         ]
     },
 
