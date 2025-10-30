@@ -394,7 +394,7 @@ class Boss2 {
             x: 1.5,
             y: 1.0
         }
-        // this.gravidade = 0.8;
+        // this.gravidade = 1;
         this.ctx = ctx;
         this.atingido = true;
 
@@ -403,7 +403,7 @@ class Boss2 {
         this.direcao = 0;      // direção atual
         this.maximoframes = 6; // normal 6 frames por linha
         this.frameContador = 0;
-        this.frameDelay = 10; // normal é 10
+        this.frameDelay = 9; // normal é 10
         this.acao = "movendo";
         this.acao_anterior = 0;
 
@@ -427,7 +427,7 @@ class Boss2 {
             x: (Math.random() > 0.5 ? 1 : -1),
             y: (Math.random() > 0.5 ? 1 : -1)
         }
-        this.speed = 1.5; // velocidade base suave 1.5
+        this.speed = 2.0; // velocidade base suave 1.5
 
         // timer para mudar direção aleatória
         this.tempoMudancaDirecao = 0;
@@ -576,9 +576,9 @@ class Boss2 {
 
 
         this.atingido = false;
-        console.log("Chamou o metodo")
-        let hitboxX = 100;
-        let hitboxY = 100;
+        console.log("testando a colisão")
+        let hitboxX = 150;
+        let hitboxY = 195;
         const dentroX = Math.abs(this.position.x - Playerx) < hitboxX / 2;
         const dentroY = Math.abs(this.position.y - Playery) < hitboxY;
 
