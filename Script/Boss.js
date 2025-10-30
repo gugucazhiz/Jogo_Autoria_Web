@@ -854,6 +854,10 @@ class Boss4 {
         this.gravidade = 0.8;
         this.ctx = ctx;
         this.atingido = true;
+        //Fumacas
+        this.fumacas = [];
+        this.cooldownAtaque = 0;
+        this.tempoEntreAtaques = 5000;
 
         // controle de Frames
         this.estado = 0;
@@ -989,6 +993,26 @@ class Boss4 {
         this.verificaHitboxPlayer(Playerx, Playery, player);
         // Verifica colisão do boss com o player
 
+        if (Date.now() > this.cooldownAtaque) {
+        this.atirar(player);
+        this.cooldownAtaque = Date.now() + this.tempoEntreAtaques;
+        }
+
+        this.fumacas.forEach((f, i) => {
+            f.update();
+
+            // Verifica colisão com player
+            if (f.colideCom(player)) {
+                player.helthAtual(1); // dano no player
+                f.viva = false;
+            }
+
+            // Remove se estiver morta ou fora da tela
+            if (!f.viva) {
+                this.fumacas.splice(i, 1);
+            }
+         });
+
         this.draw();
     }
 
@@ -1062,5 +1086,136 @@ class Boss4 {
     isAtingido() {
         this.atingido = true;
     }
+
+    atirar(player) {
+    const novaFumaca = new Fumaca(
+        this.position.x + this.size.w / 2, 
+        this.position.y + this.size.h / 2,
+        player.position.x + player.largura / 2, // centro do player
+        player.position.y + player.altura / 2,
+        this.ctx
+    );
+    this.fumacas.push(novaFumaca);
+    }
     
+}
+
+//
+
+class Fumaca {
+    constructor(x, y, alvoX, alvoY, ctx) {
+        this.ctx = ctx;
+        this.position = { x, y };
+        this.size = { width: 80, height: 20 };
+        this.spriteFumaca = new Image();
+        this.spriteFumaca.src = "./Sprites/Bosses/BossAlan/sprites/sem fundo/fumaças.png";
+
+        // Controle de frames (mantido)
+        this.altura = 82;
+        this.largura = 80;
+        this.estado = 1;
+        this.frameContador = 0;
+        this.frameDelay = 10;
+        this.acao = "parado";
+        this.acao_anterior = 0;
+
+        this.speed = 3;
+        this.viva = true;
+
+        // Calcula direção até o player
+        const dx = alvoX - x;
+        const dy = alvoY - y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        this.velocity = {
+            x: (dx / dist) * this.speed,
+            y: (dy / dist) * this.speed,
+        };
+        this.hitbox = {
+            offsetX: 10,   // deslocamento lateral
+            offsetY: 20,   // deslocamento vertical
+            width: 60,     // largura da hitbox
+            height: 40     // altura da hitbox
+        };
+
+        this.debug = true;
+    }
+
+    draw() {
+        this.ctx.drawImage(
+            this.spriteFumaca,
+            0.8 * this.largura,
+            0.7 * this.altura,
+            this.largura - 1,
+            this.altura - 1,
+            this.position.x,
+            this.position.y - 50,
+            this.largura-30,
+            this.altura-30
+        );
+    }
+
+    update() {
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+
+        // Remove se sair da tela
+        if (
+            this.position.x < -90 ||
+            this.position.x > canvas.width + 80 ||
+            this.position.y < -90 ||
+            this.position.y > canvas.height + 80
+        ) {
+            this.viva = false;
+        }
+
+        this.draw();
+    }
+    getHitbox() {
+        return {
+            x: this.position.x + this.hitbox.offsetX,
+            y: this.position.y + this.hitbox.offsetY,
+            w: this.hitbox.width,
+            h: this.hitbox.height
+        };
+    }
+    colideCom(player) {
+            const hb = this.getHitbox();
+
+            const playerBox = {
+                x: player.position.x,
+                y: player.position.y,
+                w: player.largura,
+                h: player.altura
+            };
+
+            const playerBoxReducida = {
+                x: player.position.x + 10,
+                y: player.position.y + 10,
+                w: player.largura - 160,
+                h: player.altura - 130 
+            };
+
+            if (this.debug) {
+                //colisao player
+                this.ctx.strokeStyle = "red";
+                this.ctx.lineWidth = 2;
+                this.ctx.strokeRect(hb.x, hb.y, hb.w, hb.h);
+
+                //tamanho normal player
+                this.ctx.strokeStyle = "blue";
+                this.ctx.strokeRect(playerBox.x, playerBox.y, playerBox.w, playerBox.h);
+
+                //colisão real
+                this.ctx.strokeStyle = "lime";
+                this.ctx.strokeRect(playerBoxReducida.x, playerBoxReducida.y, playerBoxReducida.w, playerBoxReducida.h);
+            }
+
+            return (
+                hb.x + 10 < playerBoxReducida.x + playerBoxReducida.w &&
+                hb.x + hb.w - 10 > playerBoxReducida.x &&
+                hb.y + 10 < playerBoxReducida.y + playerBoxReducida.h &&
+                hb.y + hb.h - 10 > playerBoxReducida.y
+            );
+}
+
 }

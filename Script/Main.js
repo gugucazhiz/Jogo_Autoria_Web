@@ -205,6 +205,18 @@ function animate() {
                 });
             }
             }
+            if(inimigo instanceof Boss4) {
+                inimigo.fumacas.forEach((fumaca, fIndex) => {
+                    fumaca.update();
+
+                    if(fumaca.colideCom(player)){
+                        player.heathAtual();
+                        fumaca.viva = false;
+                    }
+
+                    if(!fumaca.viva) inimigo.fumaca.splice(fIndex,1);
+                })
+            }
         });
 
         // Atualiza e desenha balas
