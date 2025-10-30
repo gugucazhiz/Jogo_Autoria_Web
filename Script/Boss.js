@@ -858,7 +858,7 @@ class Boss4 {
         // controle de Frames
         this.estado = 0;
         this.direcao = 0;      // direção atual
-        this.maximoframes = 4; // 6 frames por linha
+        this.maximoframes = 4; // 4 frames por linha
         this.frameContador = 0;
         this.frameDelay = 100;
         this.acao = "movendo";
@@ -866,7 +866,7 @@ class Boss4 {
 
         // sprite
         this.altura = 165;  // altura de cada quadro (mantida)
-        this.largura = 183; // largura aproximada de cada quadro (mantida)
+        this.largura = 212 // largura aproximada de cada quadro
         this.sprite = new Image();
         this.sprite.src = "./Sprites/Bosses/BossAlan/sprites/sem fundo/boss.png";
 

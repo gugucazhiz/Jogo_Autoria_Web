@@ -36,7 +36,7 @@ export const mapas = {
             { tipo: "Inimigo2", x: 2550, dir: 1 },
             { tipo: "Inimigo2", x: -1550, dir: 1 },
             { tipo: "Inimigo2", x: 3650, dir: 1 },
-            //{ tipo: "Inimigo2", x: -3550, dir: 1 },
+            { tipo: "Inimigo2", x: -3550, dir: 1 },
         ]
     },
 
