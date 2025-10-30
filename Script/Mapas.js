@@ -91,14 +91,15 @@ export const mapas = {
         tilesetPath: "./Sprites/Bosses/BossNayan/background/tileSetCeu.png",
         inimigosConfig: [
             //{ tipo: "Inimigo", x: 600, dir: 1 },
-            { tipo: "Inimigo", x: 1600, dir: 1 },
-            { tipo: "Inimigo2", x: -2000, dir: 1 },
-            { tipo: "Inimigo", x: 1200, dir: 1 },
-            { tipo: "Inimigo", x: 3000, dir: 1 },
-            { tipo: "Inimigo2", x: -800, dir: 1 },
-            { tipo: "Inimigo2", x: 2550, dir: 1 },
-            { tipo: "Inimigo2", x: -1000, dir: 1 },
-            { tipo: "Inimigo2", x: 1800, dir: 1 },
+            { tipo: "BossCeu", x: 1600, dir: 1},
+            //{ tipo: "Inimigo", x: 1600, dir: 1 },
+            //{ tipo: "Inimigo2", x: -2000, dir: 1 },
+            //{ tipo: "Inimigo", x: 1200, dir: 1 },
+            //{ tipo: "Inimigo", x: 3000, dir: 1 },
+            //{ tipo: "Inimigo2", x: -800, dir: 1 },
+            //{ tipo: "Inimigo2", x: 2550, dir: 1 },
+            //{ tipo: "Inimigo2", x: -1000, dir: 1 },
+            //{ tipo: "Inimigo2", x: 1800, dir: 1 },
         ]
     },
 
