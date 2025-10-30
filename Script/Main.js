@@ -12,7 +12,7 @@ import { drawMap,mapas,gerarPlataformas} from "./Mapas.js";
 import { playTiro,addMusic,abaixarVolume, playAgachar} from "./SonsEMusicas.js";
 
 
-let seletorDeMapaAtual =4;
+let seletorDeMapaAtual =1;
 
 let mapaAtual;
 let plataformas = [];
@@ -68,10 +68,10 @@ function carregarInimigosDoMapa(ctx, carregarMapa) {
             return new Boss1(ctx, canvas.width / 2, 100);
         }
         else if(conf.tipo === "BossPista"){
-            return new Boss2(ctx, canvas.width / 2, 100);
+            return new Boss2(ctx, conf.x, 5);
         }
         else if(conf.tipo === "BossCeu"){
-            return new Boss3(ctx, canvas.width / 2, 100);
+            return new Boss3(ctx, canvas.width / 2, 10);
         }
         else if(conf.tipo === "BossMasmorra"){
             return new Boss4(ctx, canvas.width / 2, 100);
@@ -88,6 +88,8 @@ let transicaoEmAndamento = false;
 const player = new Player(ctx,canvas);
 //inimigos.push(new Inimigo(ctx,600,1,false,true,0));
 //inimigos.push(new Inimigo2(ctx,700,1,false,true,2));
+const Tesouras = [];
+let tesoura = new Tesoura(50,50,1,ctx)
 const balas = [];
 let isAgachando = false;
 let canPress = true;
@@ -181,15 +183,29 @@ function animate() {
         
         inimigos.forEach(async(inimigo, index) => {
             if (inimigo.life > 2 && !inimigo.morrendo) {
-            inimigo.morrendo = true; // impede chamar de novo
-            
-            await inimigoMorreu(inimigo, index);
-            inimigo.vivo =false;
-        } else if (inimigo.vivo){
-            inimigo.update(player.position.y, player.position.x,player,inimigos);
-        }
-        });
+                inimigo.morrendo = true; // impede chamar de novo
+                
+                await inimigoMorreu(inimigo, index);
+                inimigo.vivo =false;
+            } 
+            else if (inimigo.vivo){
+                inimigo.update(player.position.y, player.position.x,player,inimigos);
+                if (inimigo instanceof Boss1) {
+                    inimigo.tesouras.forEach((tesoura, tIndex) => {
+                    tesoura.update();
 
+                    // verifica colisao
+                    if (tesoura.colideCom(player)) {
+                        player.helthAtual(1);
+                        tesoura.viva = false;
+                    }
+
+                    // remove tesoura sair da tela
+                    if (!tesoura.viva) inimigo.tesouras.splice(tIndex, 1);
+                });
+            }
+            }
+        });
 
         // Atualiza e desenha balas
         balas.forEach((bala, index) => {

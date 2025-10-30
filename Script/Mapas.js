@@ -36,7 +36,7 @@ export const mapas = {
             { tipo: "Inimigo2", x: 2550, dir: 1 },
             { tipo: "Inimigo2", x: -1550, dir: 1 },
             { tipo: "Inimigo2", x: 3650, dir: 1 },
-            { tipo: "Inimigo2", x: -3550, dir: 1 },
+            //{ tipo: "Inimigo2", x: -3550, dir: 1 },
         ]
     },
 
@@ -69,16 +69,16 @@ export const mapas = {
         matriz: tileSetSkate.layers[0].data,
         tilesetPath: "./Sprites/Bosses/BossDavi/background/skateTiles.png",
         inimigosConfig: [
-            { tipo: "BossPista", x: 1600, dir: 1 },
-            // { tipo: "Inimigo", x: 2600, dir: 1 },
-            // { tipo: "Inimigo2", x: 2300, dir: 1 },
-            // { tipo: "Inimigo", x: 3500, dir: 1 },
-            // { tipo: "Inimigo2", x: -4000, dir: 1 },
-            // { tipo: "Inimigo", x: 3800, dir: 1 },
-            // { tipo: "Inimigo", x: 1500, dir: 1 },
-            // { tipo: "Inimigo2", x: 1900, dir: 1 },
-            // { tipo: "Inimigo", x: -2080, dir: 1 },
-            // { tipo: "Inimigo2", x: 1550, dir: 1 }
+            { tipo: "BossPista", x: 1300, dir: 1 },
+             { tipo: "Inimigo", x: 2600, dir: 1 },
+             { tipo: "Inimigo2", x: 2300, dir: 1 },
+             { tipo: "Inimigo", x: 3500, dir: 1 },
+             { tipo: "Inimigo2", x: -4000, dir: 1 },
+             { tipo: "Inimigo", x: 3800, dir: 1 },
+             { tipo: "Inimigo", x: 1500, dir: 1 },
+             { tipo: "Inimigo2", x: 1900, dir: 1 },
+             { tipo: "Inimigo", x: -2080, dir: 1 },
+             { tipo: "Inimigo2", x: 1550, dir: 1 }
         ]
     },
 
