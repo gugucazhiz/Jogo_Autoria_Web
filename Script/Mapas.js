@@ -49,10 +49,11 @@ export const mapas = {
         matriz: tileSetMasmorra.layers[0].data,
         tilesetPath: "./Sprites/Bosses/BossAlan/background/tilesetMasmorra.png",
         inimigosConfig: [
-            { tipo: "Inimigo", x: 1600, dir: 1 },
-            { tipo: "Inimigo2", x: -2000, dir: 1 },
-            { tipo: "Inimigo", x: 1200, dir: 1 },
-            { tipo: "Inimigo", x: 3000, dir: 1 },
+            { tipo: "BossMasmorra", x: 1600, dir: 1 },
+            // { tipo: "Inimigo", x: 1600, dir: 1 },
+            // { tipo: "Inimigo2", x: -2000, dir: 1 },
+            // { tipo: "Inimigo", x: 1200, dir: 1 },
+            // { tipo: "Inimigo", x: 3000, dir: 1 },
             //{ tipo: "Inimigo", x: -800, dir: 1 },
             //{ tipo: "Inimigo2", x: 2550, dir: 1 }
             

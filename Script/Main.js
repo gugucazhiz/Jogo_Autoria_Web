@@ -12,7 +12,7 @@ import { drawMap,mapas,gerarPlataformas} from "./Mapas.js";
 import { playTiro,addMusic,abaixarVolume, playAgachar} from "./SonsEMusicas.js";
 
 
-let seletorDeMapaAtual =3;
+let seletorDeMapaAtual =4;
 let mapaAtual;
 let plataformas = [];
 
@@ -71,6 +71,9 @@ function carregarInimigosDoMapa(ctx, carregarMapa) {
         }
         else if(conf.tipo === "BossCeu"){
             return new Boss3(ctx, canvas.width / 2, 100);
+        }
+        else if(conf.tipo === "BossMasmorra"){
+            return new Boss4(ctx, canvas.width / 2, 100);
         }
     });
 }
