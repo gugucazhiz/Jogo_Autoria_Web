@@ -1137,14 +1137,14 @@ class Fumaca {
             height: 40     // altura da hitbox
         };
 
-        this.debug = true;
+        this.debug = false;
     }
 
     draw() {
         this.ctx.drawImage(
             this.spriteFumaca,
-            0.8 * this.largura,
-            0.7 * this.altura,
+            0.3 * this.largura,
+            0.3 * this.altura,
             this.largura - 1,
             this.altura - 1,
             this.position.x,
@@ -1173,7 +1173,7 @@ class Fumaca {
     getHitbox() {
         return {
             x: this.position.x + this.hitbox.offsetX,
-            y: this.position.y + this.hitbox.offsetY,
+            y: this.position.y-60 + this.hitbox.offsetY,
             w: this.hitbox.width,
             h: this.hitbox.height
         };
@@ -1213,7 +1213,7 @@ class Fumaca {
             return (
                 hb.x + 10 < playerBoxReducida.x + playerBoxReducida.w &&
                 hb.x + hb.w - 10 > playerBoxReducida.x &&
-                hb.y + 10 < playerBoxReducida.y + playerBoxReducida.h &&
+                hb.y + 10 < playerBoxReducida.y-60 + playerBoxReducida.h &&
                 hb.y + hb.h - 10 > playerBoxReducida.y
             );
 }
