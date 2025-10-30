@@ -241,16 +241,16 @@ class Boss2 {
             x: 1.5,
             y: 1.0
         }
-        this.gravidade = 0.8;
+        // this.gravidade = 0.8;
         this.ctx = ctx;
         this.atingido = true;
 
         // controle de Frames
         this.estado = 0;
         this.direcao = 0;      // direção atual
-        this.maximoframes = 5; // normal 6 frames por linha
+        this.maximoframes = 6; // normal 6 frames por linha
         this.frameContador = 0;
-        this.frameDelay = 60; // normal é 10
+        this.frameDelay = 10; // normal é 10
         this.acao = "movendo";
         this.acao_anterior = 0;
 
@@ -274,7 +274,7 @@ class Boss2 {
             x: (Math.random() > 0.5 ? 1 : -1),
             y: (Math.random() > 0.5 ? 1 : -1)
         }
-        this.speed = 0; // velocidade base suave 1.5
+        this.speed = 1.5; // velocidade base suave 1.5
 
         // timer para mudar direção aleatória
         this.tempoMudancaDirecao = 0;
@@ -336,7 +336,7 @@ class Boss2 {
 
         // aplica velocidade suave
         this.position.x += this.speed * this.velocidadeAleatoria.x;
-        this.position.y += this.speed * this.velocidadeAleatoria.y;
+        this.position.y += canvas.height - this.size.h - 200; // mesmo chão do limite
 
         // limites horizontais
         if (this.position.x <= 0) {
@@ -371,7 +371,7 @@ class Boss2 {
             this.acao_anterior = 190;
         }
         else {
-            this.acao_anterior = 190;
+            this.acao_anterior = 0;
         }
         // atualiza frames de animação
         this.animateFrames();
