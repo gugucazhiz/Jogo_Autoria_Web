@@ -248,9 +248,9 @@ class Boss2 {
         // controle de Frames
         this.estado = 0;
         this.direcao = 0;      // direção atual
-        this.maximoframes = 2; // normal 6 frames por linha
+        this.maximoframes = 5; // normal 6 frames por linha
         this.frameContador = 0;
-        this.frameDelay = 50; // normal é 10
+        this.frameDelay = 60; // normal é 10
         this.acao = "movendo";
         this.acao_anterior = 0;
 
@@ -371,7 +371,7 @@ class Boss2 {
             this.acao_anterior = 190;
         }
         else {
-            this.acao_anterior = 0;
+            this.acao_anterior = 190;
         }
         // atualiza frames de animação
         this.animateFrames();
