@@ -279,16 +279,16 @@ document.addEventListener("keydown", ({code}) => {
 https://github.com/user-attachments/assets/5e18f057-4f69-405a-a47d-de5c3960868c
 
 ### Fase da Praia
-<img width="1919" height="864" alt="Image" src="https://github.com/user-attachments/assets/3d0b5ce1-6c91-4d82-8a79-adfdf32612e7" />
+https://github.com/user-attachments/assets/32f58f23-0e20-4d8d-97df-2421932bc9ca
 
 ### Pista de Skate
-<img width="1915" height="855" alt="Image" src="https://github.com/user-attachments/assets/160f5719-b3c3-4da0-98bd-7d99ccbb9328" />
+https://github.com/user-attachments/assets/4c3ce093-46aa-4ce2-ab17-58eed3b9e9e6
 
 ### Fase do Céu
-<img width="1919" height="863" alt="Image" src="https://github.com/user-attachments/assets/4760b6a8-0239-4cb1-a9af-c15e8dd8b7f4" />
+https://github.com/user-attachments/assets/ef6449b5-2a52-4d7b-a6a5-fd9f69fb08a0
 
-### Fase Final
-<img width="1919" height="853" alt="Image" src="https://github.com/user-attachments/assets/18d53795-2955-4065-a7b3-8dce1c05861e" />
+### Fase Final Masmorra
+https://github.com/user-attachments/assets/fe1804b6-5cab-4d59-b53b-42d545c625e6
 
 ### Game Over
 <img width="1919" height="858" alt="Image" src="https://github.com/user-attachments/assets/b381639f-c0a3-4ba7-9393-b76b97f5ba8d" />
