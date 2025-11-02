@@ -275,24 +275,26 @@ document.addEventListener("keydown", ({code}) => {
 
 ## Screenshots
 
-### Tela Principal
+### Tela de Inicio
 https://github.com/user-attachments/assets/5e18f057-4f69-405a-a47d-de5c3960868c
 
 ### Fase da Praia
-[Espaço para screenshot da fase da praia]
+<img width="1919" height="864" alt="Image" src="https://github.com/user-attachments/assets/3d0b5ce1-6c91-4d82-8a79-adfdf32612e7" />
 
 ### Pista de Skate
-[Espaço para screenshot da pista de skate]
+<img width="1915" height="855" alt="Image" src="https://github.com/user-attachments/assets/160f5719-b3c3-4da0-98bd-7d99ccbb9328" />
 
 ### Fase do Céu
-[Espaço para screenshot da fase do céu]
+<img width="1919" height="863" alt="Image" src="https://github.com/user-attachments/assets/4760b6a8-0239-4cb1-a9af-c15e8dd8b7f4" />
 
 ### Fase Final
-[Espaço para screenshot da fase final]
+<img width="1919" height="853" alt="Image" src="https://github.com/user-attachments/assets/18d53795-2955-4065-a7b3-8dce1c05861e" />
 
 ### Game Over
-[Espaço para screenshot da tela de game over]
+<img width="1919" height="858" alt="Image" src="https://github.com/user-attachments/assets/b381639f-c0a3-4ba7-9393-b76b97f5ba8d" />
 
+### Vitória
+<img width="1919" height="853" alt="Image" src="https://github.com/user-attachments/assets/eece7d6d-4137-4aed-ac95-12f0b92c8780" />
 ---
 
 ## Créditos
