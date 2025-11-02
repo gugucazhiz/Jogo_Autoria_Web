@@ -279,7 +279,7 @@ document.addEventListener("keydown", ({code}) => {
 https://github.com/user-attachments/assets/5e18f057-4f69-405a-a47d-de5c3960868c
 
 ### Fase da Praia
-https://github.com/user-attachments/assets/32f58f23-0e20-4d8d-97df-2421932bc9ca
+https://github.com/user-attachments/assets/97935641-36ac-476d-b291-da02754d62a4
 
 ### Pista de Skate
 https://github.com/user-attachments/assets/4c3ce093-46aa-4ce2-ab17-58eed3b9e9e6
